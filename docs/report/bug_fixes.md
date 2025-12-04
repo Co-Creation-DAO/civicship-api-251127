@@ -357,7 +357,7 @@ git log --oneline --grep="auth\|session\|cookie" | head -10
 ```
 
 **Related Code:**
-- Auth middleware: [`src/presentation/middleware/auth.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/presentation/middleware/auth.ts)
+- Auth middleware: [`src/presentation/middleware/auth.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/presentation/middleware/auth)
 - Header extraction: [`src/presentation/middleware/auth/extract-headers.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/presentation/middleware/auth/extract-headers.ts)
 
 ### PR #327: Community Association Fix
