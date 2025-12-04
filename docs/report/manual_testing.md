@@ -45,8 +45,11 @@
 4. Verify user creation and wallet initialization
 
 **Expected Result:** User successfully created with wallet and DID request
+
 **Actual Result:** ✅ User created successfully, wallet initialized with 0 points
+
 **Test Data:** Phone: +81-90-1234-5678, Token: valid_firebase_token
+
 **Duration:** 2.3 seconds
 
 ### Test Case 2: Community Owner Authorization
@@ -57,8 +60,11 @@
 4. Test with non-owner user to confirm rejection
 
 **Expected Result:** Owner operations succeed, non-owner operations rejected
+
 **Actual Result:** ✅ Authorization working correctly
+
 **Test Data:** Owner UID: test_owner_123, Community ID: comm_001
+
 **Duration:** 1.8 seconds
 
 ### Test Case 3: Self-Only Operations
@@ -69,8 +75,11 @@
 4. Verify proper authorization enforcement
 
 **Expected Result:** Own profile editable, others' profiles protected
+
 **Actual Result:** ✅ Self-only authorization enforced correctly
+
 **Test Data:** User UID: test_user_456, Target UID: test_user_789
+
 **Duration:** 1.5 seconds
 
 ### Test Case 4: Token Validation
@@ -81,8 +90,11 @@
 4. Verify proper token validation responses
 
 **Expected Result:** Invalid tokens rejected, valid tokens accepted
+
 **Actual Result:** ✅ Token validation working correctly
+
 **Test Data:** Various token formats and expiration states
+
 **Duration:** 0.8 seconds
 
 ### Test Case 5: Role-Based Access Control
@@ -93,8 +105,11 @@
 4. Test role assignment and updates
 
 **Expected Result:** Role-based permissions enforced correctly
+
 **Actual Result:** ✅ RBAC system functioning properly
+
 **Test Data:** Manager UID: mgr_001, Member UID: mem_001
+
 **Duration:** 2.1 seconds
 
 ---
@@ -109,8 +124,11 @@
 4. Validate community configuration
 
 **Expected Result:** Community created with wallet and owner assigned
+
 **Actual Result:** ✅ Community creation successful
+
 **Test Data:** Name: "Test Community", Description: "Manual test community"
+
 **Duration:** 3.2 seconds
 
 ### Test Case 7: Member Invitation Flow
@@ -121,8 +139,11 @@
 4. Check role assignment
 
 **Expected Result:** Invitation accepted, membership created with correct role
+
 **Actual Result:** ✅ Invitation flow working correctly
+
 **Test Data:** Inviter: owner_001, Invitee: user_002, Role: MEMBER
+
 **Duration:** 4.1 seconds
 
 ### Test Case 8: Role Assignment
@@ -133,8 +154,11 @@
 4. Test permission changes
 
 **Expected Result:** Role assignments successful with permission updates
+
 **Actual Result:** ✅ Role assignment functioning properly
+
 **Test Data:** Target User: user_003, Roles: MEMBER → MANAGER → MEMBER
+
 **Duration:** 2.7 seconds
 
 ### Test Case 9: Community Configuration
@@ -145,8 +169,11 @@
 4. Verify configuration persistence
 
 **Expected Result:** Configuration changes saved and applied
+
 **Actual Result:** ✅ Community configuration working correctly
+
 **Test Data:** Various configuration parameters
+
 **Duration:** 2.4 seconds
 
 ### Test Case 10: Member Management
@@ -157,8 +184,11 @@
 4. Verify membership deletion
 
 **Expected Result:** Member management operations successful
+
 **Actual Result:** ✅ Member management functioning properly
+
 **Test Data:** Community with 10 members, various filter criteria
+
 **Duration:** 3.8 seconds
 
 ### Test Case 11: Community Analytics
@@ -169,9 +199,49 @@
 4. Test data export functionality
 
 **Expected Result:** Analytics data accurate and accessible
+
 **Actual Result:** ✅ Community analytics working correctly
+
 **Test Data:** Community with 6 months of activity data
+
 **Duration:** 2.9 seconds
+
+---
+
+## 📖 About Detailed Test Documentation
+
+### Purpose of Enhanced Test Cases
+
+This report includes **detailed technical documentation** for 7 critical test cases (TC 12-17, 19) related to off-chain point transactions. These enhanced test cases provide:
+
+1. **Implementation References** - Direct links to source code with line numbers
+2. **Database Verification** - SQL queries to validate test results
+3. **GraphQL Examples** - Executable queries for manual reproduction
+4. **Automated Test Links** - Integration test files for verification
+5. **Key Behaviors** - Technical implementation details
+
+### Test Cases with Enhanced Documentation
+
+The following test cases include comprehensive technical details to address reviewer feedback about verifiability and transparency of the off-chain transaction system:
+
+- **Test Case 12**: Community Point Issuance - Entry point for point creation
+- **Test Case 13**: Community Point Grant - Distribution to members
+- **Test Case 14**: User-to-User Point Donation - Peer-to-peer transfers
+- **Test Case 15**: Insufficient Balance Handling - Validation mechanisms
+- **Test Case 16**: Large Amount Transactions - Numeric type handling
+- **Test Case 17**: Concurrent Transaction Handling - ACID properties
+- **Test Case 19**: Point Balance Validation - Materialized view architecture
+
+### Why These 7 Cases?
+
+These test cases were prioritized because they:
+- Demonstrate the complete off-chain transaction lifecycle
+- Verify the materialized view balance calculation system
+- Prove transaction isolation and consistency guarantees
+- Show real-time balance update mechanisms
+- Address specific reviewer concerns about system transparency
+
+All other test cases (authentication, community management, tickets, etc.) retain their original format as they were not the focus of the reviewer's feedback.
 
 ---
 
@@ -190,6 +260,7 @@
 **Actual Result:** ✅ Point issuance successful
 
 **Test Data:**
+
 - Amount: 100 points
 - From: comm_wallet_001 (Community Wallet)
 - To: user_wallet_001 (Member Wallet)
@@ -294,6 +365,7 @@ mutation TestPointIssuance {
 **Actual Result:** ✅ Point grant functioning correctly
 
 **Test Data:**
+
 - Amount: 50 points
 - From: comm_wallet_001 (Community Wallet)
 - To: user_wallet_002 (Member Wallet)
@@ -386,6 +458,7 @@ mutation TestPointGrant {
 **Actual Result:** ✅ Point donation working correctly
 
 **Test Data:**
+
 - Amount: 25 points
 - From: user_001 (Donor)
 - To: user_002 (Recipient)
@@ -502,6 +575,7 @@ mutation TestPointDonation {
 **Actual Result:** ✅ Insufficient balance handling correct
 
 **Test Data:**
+
 - Available Balance: 10 points
 - Attempted Transfer: 50 points
 - Expected Error: "Insufficient balance"
@@ -536,6 +610,7 @@ mutation TestPointDonation {
 **Actual Result:** ✅ Large amount transactions successful
 
 **Test Data:**
+
 - Amount: 999,999,999 points
 - Type: Int (PostgreSQL integer type)
 - Range: -2,147,483,648 to 2,147,483,647
@@ -584,6 +659,7 @@ SELECT wallet_id, current_point FROM mv_current_points WHERE wallet_id IN ('wall
 **Actual Result:** ✅ Concurrent transaction handling correct
 
 **Test Data:**
+
 - Concurrent transactions: 5 simultaneous
 - Amount per transaction: 10 points
 - Total expected change: 50 points
@@ -621,8 +697,11 @@ REFRESH MATERIALIZED VIEW CONCURRENTLY mv_current_points;
 4. Verify transaction details accuracy
 
 **Expected Result:** Transaction history retrieved accurately with filters
+
 **Actual Result:** ✅ Transaction history working correctly
+
 **Test Data:** 50 transactions over 3 months, various filter combinations
+
 **Duration:** 2.6 seconds
 
 ### Test Case 19: Point Balance Validation
@@ -638,6 +717,7 @@ REFRESH MATERIALIZED VIEW CONCURRENTLY mv_current_points;
 **Actual Result:** ✅ Point balance validation successful
 
 **Test Data:**
+
 - Test Wallet: user_wallet_005
 - Transaction Count: 100+ transactions
 - Transaction Types: GRANT, DONATION, POINT_REWARD, POINT_ISSUED
@@ -773,8 +853,11 @@ query GetWalletBalance {
 4. Validate ticket status and metadata
 
 **Expected Result:** Ticket purchased successfully with proper accounting
+
 **Actual Result:** ✅ Ticket purchase functioning correctly
+
 **Test Data:** Ticket Price: 200 points, User Balance: 500 points
+
 **Duration:** 2.8 seconds
 
 ### Test Case 21: Ticket Claim Process
@@ -785,8 +868,11 @@ query GetWalletBalance {
 4. Check claim history recording
 
 **Expected Result:** Ticket claimed successfully with status tracking
+
 **Actual Result:** ✅ Ticket claim process working correctly
+
 **Test Data:** Claim Link: valid_claim_token_123
+
 **Duration:** 3.1 seconds
 
 ### Test Case 22: Ticket Refund
@@ -797,8 +883,11 @@ query GetWalletBalance {
 4. Validate refund transaction creation
 
 **Expected Result:** Ticket refunded with points returned
+
 **Actual Result:** ✅ Ticket refund functioning properly
+
 **Test Data:** Original Purchase: 200 points, Refund: 200 points
+
 **Duration:** 2.5 seconds
 
 ---
@@ -813,8 +902,11 @@ query GetWalletBalance {
 4. Test status history tracking
 
 **Expected Result:** Membership status updated with proper tracking
+
 **Actual Result:** ✅ Membership status management working correctly
+
 **Test Data:** Status: ACTIVE → INACTIVE → ACTIVE
+
 **Duration:** 2.2 seconds
 
 ### Test Case 24: Membership History Tracking
@@ -825,8 +917,11 @@ query GetWalletBalance {
 4. Test history retrieval and filtering
 
 **Expected Result:** Membership history accurately tracked and retrievable
+
 **Actual Result:** ✅ Membership history tracking successful
+
 **Test Data:** 10 membership operations over 2 weeks
+
 **Duration:** 3.7 seconds
 
 ### Test Case 25: Membership Deletion
@@ -837,8 +932,11 @@ query GetWalletBalance {
 4. Validate user access revocation
 
 **Expected Result:** Membership deleted with proper cleanup
+
 **Actual Result:** ✅ Membership deletion functioning correctly
+
 **Test Data:** User: user_005, Community: comm_002
+
 **Duration:** 2.9 seconds
 
 ---

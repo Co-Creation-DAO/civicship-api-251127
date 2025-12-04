@@ -67,7 +67,7 @@ git show cef3275 src/application/domain/account/wallet/service.ts
 **Root Cause:** Improper BigInt handling in GraphQL scalar types causing overflow and precision loss
 
 **Solution:** Enhanced BigInt typing and serialization logic
-- GraphQL schema: [`src/presentation/graphql/schema/scalar.graphql`](https://github.com/Hopin-inc/civicship-api/tree/master/src/presentation/graphql/schema) - BigInt scalar definition
+- GraphQL schema: [`src/presentation/graphql/schema/utils.graphql`](https://github.com/Hopin-inc/civicship-api/blob/master/src/presentation/graphql/schema/utils.graphql) - BigInt scalar definition
 - Type generation: Auto-generated types in `src/types/graphql.ts`
 - Database layer: Prisma handles BigInt natively for PostgreSQL numeric types
 - Point calculation: [`src/application/domain/transaction/service.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/application/domain/transaction/service.ts) - Uses Int type with proper bounds checking
@@ -77,7 +77,7 @@ git show cef3275 src/application/domain/account/wallet/service.ts
 **Verification:**
 ```bash
 # Check GraphQL scalar types
-grep -r "scalar BigInt" src/presentation/graphql/
+cat src/presentation/graphql/schema/utils.graphql | grep "scalar"
 
 # View point transaction handling
 cat src/application/domain/transaction/service.ts | grep -A5 "transferPoints"
@@ -218,7 +218,7 @@ grep -r "issuance\|credential" src/application/domain/ --include="*.ts" -A3
 **Verification:**
 ```bash
 # Check GraphQL scalar definitions
-cat src/presentation/graphql/schema/scalar.graphql 2>/dev/null || echo "Check schema files"
+cat src/presentation/graphql/schema/utils.graphql | grep "scalar"
 
 # View generated types
 head -100 src/types/graphql.ts | grep -i "bigint\|number"
