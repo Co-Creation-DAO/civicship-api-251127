@@ -553,38 +553,3 @@ grep -r "refreshCurrentPoint" src/application/
 # View authentication middleware
 cat src/presentation/middleware/auth.ts
 ```
-
----
-
-## 📚 Related Documentation
-
-### Architecture & Design
-- Architecture Guide: [`docs/handbook/ARCHITECTURE.md`](./handbook/ARCHITECTURE.md)
-- Development Patterns: [`docs/handbook/PATTERNS.md`](./handbook/PATTERNS.md)
-- Performance Optimization: [`docs/handbook/PERFORMANCE.md`](./handbook/PERFORMANCE.md)
-
-### Development & Testing
-- Development Guide: [`docs/handbook/DEVELOPMENT.md`](./handbook/DEVELOPMENT.md)
-- Testing Guide: [`docs/handbook/TESTING.md`](./handbook/TESTING.md)
-- Manual Testing Report: [`docs/report/manual_testing.md`](./manual_testing.md)
-
-### Infrastructure
-- Database Schema: [`src/infrastructure/prisma/schema.prisma`](https://github.com/Hopin-inc/civicship-api/blob/master/src/infrastructure/prisma/schema.prisma)
-- Migrations: [`src/infrastructure/prisma/migrations/`](https://github.com/Hopin-inc/civicship-api/tree/master/src/infrastructure/prisma/migrations)
-- Infrastructure Guide: [`docs/handbook/INFRASTRUCTURE.md`](./handbook/INFRASTRUCTURE.md)
-
-### Security & Authentication
-- Security Architecture: [`docs/handbook/SECURITY.md`](./handbook/SECURITY.md)
-- Auth Middleware: [`src/presentation/middleware/auth.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/presentation/middleware/auth.ts)
-
-### Off-Chain Transactions *(to be created)*
-- Off-Chain Transaction System: `docs/handbook/OFFCHAIN_TRANSACTIONS.md`
-- Transaction Domain: [`src/application/domain/transaction/`](https://github.com/Hopin-inc/civicship-api/tree/master/src/application/domain/transaction)
-
----
-
-**Report Generated**: January 2025
-**Analysis Period**: June 2024 - January 2025
-**Total PRs Analyzed**: 12 major bug fix PRs
-**Success Rate Impact**: 70% → 100% test success rate
-**Repository**: https://github.com/Hopin-inc/civicship-api
