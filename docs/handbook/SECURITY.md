@@ -15,7 +15,7 @@ civicship-api employs a four-tier security architecture:
 
 ### 1. Token Validation
 
-**Implementation File:** `src/presentation/middleware/auth.ts`
+**Implementation File:** `src/presentation/middleware/auth/index.ts`
 
 ```typescript
 export async function createContext({ req }: { req: http.IncomingMessage }): Promise<IContext> {

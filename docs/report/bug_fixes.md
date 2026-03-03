@@ -349,7 +349,7 @@ grep -r "timeout\|logger" src/application/domain/transaction/ --include="*.ts"
 **Verification:**
 ```bash
 # Check authentication middleware
-cat src/presentation/middleware/auth.ts
+cat src/presentation/middleware/auth/index.ts
 cat src/presentation/middleware/auth/extract-headers.ts
 
 # View recent auth improvements
@@ -357,7 +357,7 @@ git log --oneline --grep="auth\|session\|cookie" | head -10
 ```
 
 **Related Code:**
-- Auth middleware: [`src/presentation/middleware/auth.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/presentation/middleware/auth)
+- Auth middleware: [`src/presentation/middleware/auth/index.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/presentation/middleware/auth/index.ts)
 - Header extraction: [`src/presentation/middleware/auth/extract-headers.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/presentation/middleware/auth/extract-headers.ts)
 
 ### PR #327: Community Association Fix
@@ -551,5 +551,5 @@ grep -r "ctx.issuer.onlyBelongingCommunity" src/application/domain/transaction/
 grep -r "refreshCurrentPoint" src/application/
 
 # View authentication middleware
-cat src/presentation/middleware/auth.ts
+cat src/presentation/middleware/auth/index.ts
 ```

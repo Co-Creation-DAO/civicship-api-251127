@@ -487,5 +487,5 @@ Comprehensive documentation available in `docs/handbook/`:
 - `src/application/provider.ts` - Dependency injection container setup (275 lines)
 - `src/infrastructure/prisma/client.ts` - Row-Level Security implementation
 - `src/presentation/graphql/rule.ts` - Authorization rules
-- `src/presentation/middleware/auth.ts` - Authentication middleware
+- `src/presentation/middleware/auth/index.ts` - Authentication middleware
 - `src/types/graphql.ts` - Generated GraphQL types (auto-generated)
