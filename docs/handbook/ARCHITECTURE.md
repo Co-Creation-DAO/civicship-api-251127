@@ -440,7 +440,7 @@ orderBy: { createdAt: 'desc' }
 
 ### Authentication Flow
 
-1. **Token Verification** → `presentation/middleware/auth.ts`
+1. **Token Verification** → `presentation/middleware/auth/index.ts`
 - Firebase JWT token validation
 - Multi-tenant support for communities
 - Token expiration and renewal handling
