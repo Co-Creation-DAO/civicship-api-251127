@@ -354,7 +354,7 @@ value: "info"
 ### Health Check Endpoint
 
 ```typescript
-// src/presentation/router/health.ts
+// src/index.ts
 app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'healthy',

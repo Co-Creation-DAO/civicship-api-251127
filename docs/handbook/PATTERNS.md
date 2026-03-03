@@ -359,7 +359,7 @@ return await auth.verifyIdToken(token);
 ### GraphQL ↔ Prisma conversion
 
 ```typescript
-// src/application/domain/user/data/converter.ts
+// src/application/domain/account/user/data/converter.ts
 export class UserConverter {
 static toGraphQL(prismaUser: PrismaUser): GraphQLUser {
 return {
