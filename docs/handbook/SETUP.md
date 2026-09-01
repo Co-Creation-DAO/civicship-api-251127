@@ -27,7 +27,7 @@ npm install -g pnpm
 
 ```bash
 # Clone the repository (if not already done)
-git clone https://github.com/Hopin-inc/civicship-api.git
+git clone https://github.com/Co-Creation-DAO/civicship-api-251127.git
 cd civicship-api
 
 # Switch to the develop branch

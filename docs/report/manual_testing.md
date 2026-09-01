@@ -271,14 +271,14 @@ All other test cases (authentication, community management, tickets, etc.) retai
 ---
 
 **Implementation Reference:**
-- GraphQL Mutation: [`src/application/domain/transaction/schema/mutation.graphql:5-8`](https://github.com/Hopin-inc/civicship-api/blob/master/src/application/domain/transaction/schema/mutation.graphql#L5-L8)
-- UseCase: [`src/application/domain/transaction/usecase.ts:64-88`](https://github.com/Hopin-inc/civicship-api/blob/master/src/application/domain/transaction/usecase.ts#L64-L88)
-- Service: [`src/application/domain/transaction/service.ts:35-46`](https://github.com/Hopin-inc/civicship-api/blob/master/src/application/domain/transaction/service.ts#L35-L46)
-- Repository: [`src/application/domain/transaction/data/repository.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/application/domain/transaction/data/repository.ts)
+- GraphQL Mutation: [`src/application/domain/transaction/schema/mutation.graphql:5-8`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/transaction/schema/mutation.graphql#L5-L8)
+- UseCase: [`src/application/domain/transaction/usecase.ts:64-88`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/transaction/usecase.ts#L64-L88)
+- Service: [`src/application/domain/transaction/service.ts:35-46`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/transaction/service.ts#L35-L46)
+- Repository: [`src/application/domain/transaction/data/repository.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/transaction/data/repository.ts)
 
 **Automated Test:**
-- Test File: [`src/__tests__/integration/pointTransfer/issueCommunityPoint.test.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/__tests__/integration/pointTransfer/issueCommunityPoint.test.ts)
-- Error Handling: [`src/__tests__/integration/pointTransfer/issueCommunityPoint.error.test.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/__tests__/integration/pointTransfer/issueCommunityPoint.error.test.ts)
+- Test File: [`src/__tests__/integration/pointTransfer/issueCommunityPoint.test.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/__tests__/integration/pointTransfer/issueCommunityPoint.test.ts)
+- Error Handling: [`src/__tests__/integration/pointTransfer/issueCommunityPoint.error.test.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/__tests__/integration/pointTransfer/issueCommunityPoint.error.test.ts)
 
 ```bash
 # Run this specific test
@@ -377,14 +377,14 @@ mutation TestPointIssuance {
 ---
 
 **Implementation Reference:**
-- GraphQL Mutation: [`src/application/domain/transaction/schema/mutation.graphql:11-15`](https://github.com/Hopin-inc/civicship-api/blob/master/src/application/domain/transaction/schema/mutation.graphql#L11-L15)
-- UseCase: [`src/application/domain/transaction/usecase.ts:90-158`](https://github.com/Hopin-inc/civicship-api/blob/master/src/application/domain/transaction/usecase.ts#L90-L158)
-- Service: [`src/application/domain/transaction/service.ts:48-60`](https://github.com/Hopin-inc/civicship-api/blob/master/src/application/domain/transaction/service.ts#L48-L60)
+- GraphQL Mutation: [`src/application/domain/transaction/schema/mutation.graphql:11-15`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/transaction/schema/mutation.graphql#L11-L15)
+- UseCase: [`src/application/domain/transaction/usecase.ts:90-158`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/transaction/usecase.ts#L90-L158)
+- Service: [`src/application/domain/transaction/service.ts:48-60`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/transaction/service.ts#L48-L60)
 - Notification: Sends LINE push notification to recipient
 
 **Automated Test:**
-- Test File: [`src/__tests__/integration/pointTransfer/grantCommunityPoint.test.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/__tests__/integration/pointTransfer/grantCommunityPoint.test.ts)
-- Error Handling: [`src/__tests__/integration/pointTransfer/grantCommunityPoint.error.test.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/__tests__/integration/pointTransfer/grantCommunityPoint.error.test.ts)
+- Test File: [`src/__tests__/integration/pointTransfer/grantCommunityPoint.test.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/__tests__/integration/pointTransfer/grantCommunityPoint.test.ts)
+- Error Handling: [`src/__tests__/integration/pointTransfer/grantCommunityPoint.error.test.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/__tests__/integration/pointTransfer/grantCommunityPoint.error.test.ts)
 
 ```bash
 # Run this specific test
@@ -470,14 +470,14 @@ mutation TestPointGrant {
 ---
 
 **Implementation Reference:**
-- GraphQL Mutation: [`src/application/domain/transaction/schema/mutation.graphql:17-21`](https://github.com/Hopin-inc/civicship-api/blob/master/src/application/domain/transaction/schema/mutation.graphql#L17-L21)
-- UseCase: [`src/application/domain/transaction/usecase.ts:160-218`](https://github.com/Hopin-inc/civicship-api/blob/master/src/application/domain/transaction/usecase.ts#L160-L218)
-- Service: [`src/application/domain/transaction/service.ts:62-74`](https://github.com/Hopin-inc/civicship-api/blob/master/src/application/domain/transaction/service.ts#L62-L74)
-- Validator: [`src/application/domain/account/wallet/validator.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/application/domain/account/wallet/validator.ts) - Balance validation
+- GraphQL Mutation: [`src/application/domain/transaction/schema/mutation.graphql:17-21`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/transaction/schema/mutation.graphql#L17-L21)
+- UseCase: [`src/application/domain/transaction/usecase.ts:160-218`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/transaction/usecase.ts#L160-L218)
+- Service: [`src/application/domain/transaction/service.ts:62-74`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/transaction/service.ts#L62-L74)
+- Validator: [`src/application/domain/account/wallet/validator.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/account/wallet/validator.ts) - Balance validation
 
 **Automated Test:**
-- Test File: [`src/__tests__/integration/pointTransfer/donateSelfPoint.test.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/__tests__/integration/pointTransfer/donateSelfPoint.test.ts)
-- Error Handling: [`src/__tests__/integration/pointTransfer/donateSelfPoint.error.test.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/__tests__/integration/pointTransfer/donateSelfPoint.error.test.ts)
+- Test File: [`src/__tests__/integration/pointTransfer/donateSelfPoint.test.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/__tests__/integration/pointTransfer/donateSelfPoint.test.ts)
+- Error Handling: [`src/__tests__/integration/pointTransfer/donateSelfPoint.error.test.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/__tests__/integration/pointTransfer/donateSelfPoint.error.test.ts)
 
 ```bash
 # Run this specific test
@@ -585,12 +585,12 @@ mutation TestPointDonation {
 ---
 
 **Implementation Reference:**
-- Wallet Validator: [`src/application/domain/account/wallet/validator.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/application/domain/account/wallet/validator.ts) - `validateTransferMemberToMember` method
+- Wallet Validator: [`src/application/domain/account/wallet/validator.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/account/wallet/validator.ts) - `validateTransferMemberToMember` method
 
 **Automated Test:**
 - Error test files demonstrate validation:
-  - [`src/__tests__/integration/pointTransfer/donateSelfPoint.error.test.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/__tests__/integration/pointTransfer/donateSelfPoint.error.test.ts)
-  - [`src/__tests__/integration/pointTransfer/grantCommunityPoint.error.test.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/__tests__/integration/pointTransfer/grantCommunityPoint.error.test.ts)
+  - [`src/__tests__/integration/pointTransfer/donateSelfPoint.error.test.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/__tests__/integration/pointTransfer/donateSelfPoint.error.test.ts)
+  - [`src/__tests__/integration/pointTransfer/grantCommunityPoint.error.test.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/__tests__/integration/pointTransfer/grantCommunityPoint.error.test.ts)
 
 **Key Behaviors:**
 - Balance checked BEFORE transaction starts
@@ -620,11 +620,11 @@ mutation TestPointDonation {
 ---
 
 **Implementation Reference:**
-- Database schema: [`src/infrastructure/prisma/schema.prisma`](https://github.com/Hopin-inc/civicship-api/blob/master/src/infrastructure/prisma/schema.prisma) - Transaction model uses Int type
+- Database schema: [`src/infrastructure/prisma/schema.prisma`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/infrastructure/prisma/schema.prisma) - Transaction model uses Int type
 - Materialized view: Uses SUM aggregation which handles large totals
 
 **Automated Test:**
-- Test File: [`src/__tests__/integration/pointTransfer/boundaryValues.test.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/__tests__/integration/pointTransfer/boundaryValues.test.ts)
+- Test File: [`src/__tests__/integration/pointTransfer/boundaryValues.test.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/__tests__/integration/pointTransfer/boundaryValues.test.ts)
 
 ```bash
 # Run boundary value tests
@@ -670,7 +670,7 @@ SELECT wallet_id, current_point FROM mv_current_points WHERE wallet_id IN ('wall
 
 **Implementation Reference:**
 - Transaction isolation: PostgreSQL default (READ COMMITTED)
-- Row-Level Security: [`src/infrastructure/prisma/client.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/infrastructure/prisma/client.ts) - RLS configuration
+- Row-Level Security: [`src/infrastructure/prisma/client.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/infrastructure/prisma/client.ts) - RLS configuration
 - Transaction scope: Uses Prisma transactions with proper isolation
 
 **Database Configuration:**
@@ -727,10 +727,10 @@ REFRESH MATERIALIZED VIEW CONCURRENTLY mv_current_points;
 ---
 
 **Implementation Reference:**
-- Materialized View SQL: [`src/infrastructure/prisma/sql/refreshMaterializedViewCurrentPoints.sql`](https://github.com/Hopin-inc/civicship-api/blob/master/src/infrastructure/prisma/sql/refreshMaterializedViewCurrentPoints.sql)
-- Migration: [`src/infrastructure/prisma/migrations/20250112033046_add_mv_current_point/migration.sql`](https://github.com/Hopin-inc/civicship-api/blob/master/src/infrastructure/prisma/migrations/20250112033046_add_mv_current_point/migration.sql)
-- Wallet Service: [`src/application/domain/account/wallet/service.ts:101-133`](https://github.com/Hopin-inc/civicship-api/blob/master/src/application/domain/account/wallet/service.ts#L101-L133)
-- Repository: [`src/application/domain/transaction/data/repository.ts`](https://github.com/Hopin-inc/civicship-api/blob/master/src/application/domain/transaction/data/repository.ts) - `refreshCurrentPoints` method
+- Materialized View SQL: [`src/infrastructure/prisma/sql/refreshMaterializedViewCurrentPoints.sql`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/infrastructure/prisma/sql/refreshMaterializedViewCurrentPoints.sql)
+- Migration: [`src/infrastructure/prisma/migrations/20250112033046_add_mv_current_point/migration.sql`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/infrastructure/prisma/migrations/20250112033046_add_mv_current_point/migration.sql)
+- Wallet Service: [`src/application/domain/account/wallet/service.ts:101-133`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/account/wallet/service.ts#L101-L133)
+- Repository: [`src/application/domain/transaction/data/repository.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/transaction/data/repository.ts) - `refreshCurrentPoints` method
 
 **Database Verification:**
 ```sql
@@ -1004,7 +1004,7 @@ All 25 manual test cases passed successfully without any critical issues requiri
 ### Environment Setup
 ```bash
 # Clone repository
-git clone https://github.com/Hopin-inc/civicship-api.git
+git clone https://github.com/Co-Creation-DAO/civicship-api-251127.git
 cd civicship-api
 
 # Install dependencies

@@ -2,7 +2,7 @@
 
 **Document Version**: 1.0
 **Last Updated**: January 2025
-**Repository**: https://github.com/Hopin-inc/civicship-api
+**Repository**: https://github.com/Co-Creation-DAO/civicship-api-251127
 
 ---
 
@@ -908,7 +908,7 @@ Transaction 2: Donate 60 points to User C (started simultaneously)
 
 **Critical Fixes:**
 1. **PR #360**: Prisma Expired Transaction Error Resolution
-   - Commits: [`ff8ade1`](https://github.com/Hopin-inc/civicship-api/commit/ff8ade1), [`cef3275`](https://github.com/Hopin-inc/civicship-api/commit/cef3275), [`f06d0ce`](https://github.com/Hopin-inc/civicship-api/commit/f06d0ce)
+   - Commits: [`ff8ade1`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/ff8ade1), [`cef3275`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/cef3275), [`f06d0ce`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/f06d0ce)
    - Fixed: Transaction timeout by splitting transaction boundaries
    - Impact: 95% reduction in timeout errors
 
@@ -917,7 +917,7 @@ Transaction 2: Donate 60 points to User C (started simultaneously)
    - Impact: 100% resolution of point calculation display issues
 
 3. **PR #346**: Transaction Timeout and Logging
-   - Commit: [`3f8bd0c`](https://github.com/Hopin-inc/civicship-api/commit/3f8bd0c)
+   - Commit: [`3f8bd0c`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/3f8bd0c)
    - Added: Comprehensive logging and timeout monitoring
    - Impact: 60% improvement in debugging efficiency
 
@@ -926,7 +926,7 @@ Transaction 2: Donate 60 points to User C (started simultaneously)
 ### Integration Tests
 
 **Test Suite Location:**
-- [`src/__tests__/integration/pointTransfer/`](https://github.com/Hopin-inc/civicship-api/tree/master/src/__tests__/integration/pointTransfer)
+- [`src/__tests__/integration/pointTransfer/`](https://github.com/Co-Creation-DAO/civicship-api-251127/tree/677f46e9/src/__tests__/integration/pointTransfer)
 
 **Key Test Files:**
 ```bash
@@ -1080,13 +1080,13 @@ SELECT * FROM pg_stat_activity WHERE state = 'active' AND query LIKE '%t_transac
 - **Testing Guide**: [`docs/handbook/TESTING.md`](../handbook/TESTING.md) - Testing strategies and best practices
 
 ### Database Schema
-- **Prisma Schema**: [`src/infrastructure/prisma/schema.prisma`](https://github.com/Hopin-inc/civicship-api/blob/master/src/infrastructure/prisma/schema.prisma)
-- **Migration**: [`src/infrastructure/prisma/migrations/20250112033046_add_mv_current_point/`](https://github.com/Hopin-inc/civicship-api/tree/master/src/infrastructure/prisma/migrations/20250112033046_add_mv_current_point)
+- **Prisma Schema**: [`src/infrastructure/prisma/schema.prisma`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/infrastructure/prisma/schema.prisma)
+- **Migration**: [`src/infrastructure/prisma/migrations/20250112033046_add_mv_current_point/`](https://github.com/Co-Creation-DAO/civicship-api-251127/tree/677f46e9/src/infrastructure/prisma/migrations/20250112033046_add_mv_current_point)
 
 ### Implementation Code
-- **Transaction Domain**: [`src/application/domain/transaction/`](https://github.com/Hopin-inc/civicship-api/tree/master/src/application/domain/transaction)
-- **Wallet Domain**: [`src/application/domain/account/wallet/`](https://github.com/Hopin-inc/civicship-api/tree/master/src/application/domain/account/wallet)
-- **Integration Tests**: [`src/__tests__/integration/pointTransfer/`](https://github.com/Hopin-inc/civicship-api/tree/master/src/__tests__/integration/pointTransfer)
+- **Transaction Domain**: [`src/application/domain/transaction/`](https://github.com/Co-Creation-DAO/civicship-api-251127/tree/677f46e9/src/application/domain/transaction)
+- **Wallet Domain**: [`src/application/domain/account/wallet/`](https://github.com/Co-Creation-DAO/civicship-api-251127/tree/677f46e9/src/application/domain/account/wallet)
+- **Integration Tests**: [`src/__tests__/integration/pointTransfer/`](https://github.com/Co-Creation-DAO/civicship-api-251127/tree/677f46e9/src/__tests__/integration/pointTransfer)
 
 ---
 
