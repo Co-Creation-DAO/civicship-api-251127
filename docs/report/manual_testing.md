@@ -1,5 +1,8 @@
 # 🧪 Manual Testing Report - Civicship API
 
+**Repository**: https://github.com/Co-Creation-DAO/civicship-api-251127  
+**Evidence base commit**: [`677f46e9`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/677f46e9037d4394066240ac751920a7458cfbfe) — all source references below are pinned to this commit and resolve in the repository above.
+
 ## 📊 Executive Summary
 
 ### Testing Overview
@@ -1005,7 +1008,7 @@ All 25 manual test cases passed successfully without any critical issues requiri
 ```bash
 # Clone repository
 git clone https://github.com/Co-Creation-DAO/civicship-api-251127.git
-cd civicship-api
+cd civicship-api-251127
 
 # Install dependencies
 pnpm install
