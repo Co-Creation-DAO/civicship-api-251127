@@ -1,9 +1,106 @@
 # 🐛 Bug Fixes Report - Civicship API
 
+## 🔗 Evidence Location and Traceability
+
+**Canonical repository for the M4 backend evidence:** [`Co-Creation-DAO/civicship-api-251127`](https://github.com/Co-Creation-DAO/civicship-api-251127)
+
+Every commit, file and line reference in this report resolves in that repository. No reference in
+this report points to any other repository.
+
+**Evidence base commit for file/line links:** [`677f46e9`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/677f46e9037d4394066240ac751920a7458cfbfe)
+(all `blob`/`tree` links are pinned to this commit so line anchors stay stable as `master` advances).
+
+### Why upstream PR numbers are not links
+
+The evidence was moved into this repository by transferring the **full git history verbatim**.
+Git objects — commits, trees and blobs — keep their **identical SHA-1 hashes** across such a
+transfer, so every commit hash cited in this report (for example `ff8ade1`, `cef3275`, `f06d0ce`,
+`a37c3fe`) resolves here to the byte-identical commit. GitHub pull-request pages, by contrast, are
+platform metadata rather than git objects and are not part of a repository's history, so the
+upstream PR numbers do not exist as pull-request pages in this repository.
+
+Therefore, in this report:
+
+- **Commit hashes are unchanged and directly verifiable here.**
+- **Upstream PR numbers (#325–#371) are kept only as identifiers** of the original change set. The
+  verifiable artifact for each of them in this repository is its **merge commit**, listed below.
+- Merge-commit subject lines still read `Merge pull request #NNN from Hopin-inc/<branch>`. Commit
+  messages are immutable git content; that text is not a stale reference but part of the evidence —
+  it is what shows the commit here is the same change set that was originally reviewed.
+
+### Upstream PR → merge commit in this repository
+
+All twelve merge commits below were verified to be ancestors of `master` in this repository.
+
+| Upstream PR | Fix (section in this report) | Merge commit in this repository | Merged | Commits contained in that merge |
+| --- | --- | --- | --- | --- |
+| #360 | Prisma Expired Transaction Error Resolution | [`2e6cda92`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/2e6cda922a93c8db8484dfb0423969b8438a8db4) | 2025-07-10 | [`6fe81f23`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/6fe81f238b138cc2f7fd9c258b4c2c0a792ac636), [`a0e0673e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/a0e0673eb7c72c020feec9103a00aa48030e2f50) |
+| #339 | BigInt GraphQL Processing Fix | [`eccc464a`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/eccc464a908f920bddd1779d2aa002688f9d2a6c) | 2025-07-08 | [`1ec42f5e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/1ec42f5e1adfd3175d69a70d135cc4cf16a0f968) |
+| #331 | VC Issuance DID Dependency Fix | [`3c03de0d`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/3c03de0d13982fbc55798193d5a13dc63ffe0b90) | 2025-07-08 | [`d3fdb091`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/d3fdb09110d97d8547c6ee27cdbb99794f7661ab), [`5514d9a9`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/5514d9a9ab467abc016761e7b7d1969da42d8047), [`c7f6bed3`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/c7f6bed3cdefd861e72464240f80bfc4f4dfecad), [`fca0f38a`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/fca0f38a399a935e4fb73b8028bba31e475f50be) |
+| #364 | Async Promise Handling Fix | [`d6661781`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/d6661781f2beb547571cac54fefa1e1897cf4151) | 2025-07-10 | [`7d72d41a`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/7d72d41a915a703599bfe3a898a88683cf867757) |
+| #362 | VC/DID Issuance Workflow Refactor | [`56d3c966`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/56d3c966256c411a16340c5ad99854305a1781d8) | 2025-07-10 | [`312b0682`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/312b06826211638d1c452a91dfa1917832add8f9), [`2699ef0f`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/2699ef0fcb3b9f7792f9f0cbf1310c483e3b538e), [`a221a71f`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/a221a71f4876343a33ddc6e9234d8ad444417a93) |
+| #335 | BigInt Type System Enhancement | [`1eb2e76f`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/1eb2e76f970f72c09856efdcb15e43e4230e76cf) | 2025-07-08 | [`77ffded7`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/77ffded77f63f0525dd65c1417f3496de1251acd), [`beec4199`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/beec41993eb8f374eb4e46a69af07b3c4eb1565c), [`2ce78add`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/2ce78add360f200354d423d74394349c25706b87) |
+| #371 | Unit Test Prisma Enum Alignment | [`aa725ad9`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/aa725ad9c407fd7661552853af6ff23c249b9f79) | 2025-07-11 | [`dbddb827`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/dbddb8278dcd08c62f3726baa024e5e48dcc68e2) |
+| #357 | Opportunity Data Converter Validation | [`c9a74271`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/c9a74271ad271efb474aa42a1efbed419f5e4d1e) | 2025-07-10 | [`f8fdbfc6`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/f8fdbfc6e2d059dd32dc97cf663f1adda66f81a7) |
+| #346 | Transaction Timeout and Logging | [`52fc5221`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/52fc52214963e537a6e1b91cc24d1f5a2990e614) | 2025-07-09 | [`44391809`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/44391809c8ccef1c713c17dbd3dfecf2ddb3c430), [`b516f25e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/b516f25ea3b152fa9880098b20d3da3a8915eb8f) |
+| #329 | Token Usage and Issuer Standardization | [`749c31e7`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/749c31e7ff827b38994da12283a8b43019600b81) | 2025-07-08 | [`75c088fc`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/75c088fc5722d0f6750eb3e20566ec8ee2edf4b7), [`70eba9e1`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/70eba9e11c2166b92d14e0e87bf2a38452b3f106) |
+| #327 | Community Association Fix | [`338ee65c`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/338ee65cfe5b24ab2ac2e6a55cf5a08a751068f6) | 2025-07-07 | [`08a699da`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/08a699da68800d2a298a32321f55f4d94beff85e) |
+| #325 | Database Schema Consistency | [`28260395`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/282603954a6650e80a7ced2f96a98fe5a677d10c) | 2025-07-04 | [`7ba3ae6e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/7ba3ae6e5e4a5528b2aee62d3eda9a52dc7a7417), [`40ebdb61`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/40ebdb6148ab57d545daaf457e3d509eb6f5e557) |
+
+### Commits cited in this report that were merged through a different upstream PR
+
+The sections below also cite later work on the same defects. Those commits are **not** contained in
+the pull requests listed above; each is shown here with the upstream pull request that actually
+merged it, and is labelled the same way in the section that cites it.
+
+| Commit | Subject | Committed | Merged via upstream PR | Merge commit | Cited in section |
+| --- | --- | --- | --- | --- | --- |
+| [`ff8ade1c`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/ff8ade1c70c84d1d39f44c7fbb9ff3ac56b209ea) | Switch set_config to transaction scope (TRUE) to fix connection pool pollution | 2025-11-06 | #551 | [`e2e55e39`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/e2e55e39d54c8f942c1675607a4389621e7aade7) | #360 |
+| [`cef32756`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/cef327568dd6f38dd73e6318f4c4e8023a856203) | Add documentation comment explaining why refreshCurrentPointViewIfNotExist runs in separate transaction | 2025-11-06 | #551 | [`e2e55e39`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/e2e55e39d54c8f942c1675607a4389621e7aade7) | #360 |
+| [`f06d0cee`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/f06d0cee7efa7b0fda9194d9ec310d4b25496e77) | Fix transaction scope violations by adding tx parameter to read methods | 2025-11-06 | #551 | [`e2e55e39`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/e2e55e39d54c8f942c1675607a4389621e7aade7) | #360 |
+| [`a37c3fea`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/a37c3feae0d8c33e84c67009b3b04b85f6a7749a) | fix: Geminiレビュー対応 - 型アサーション除去とasync/await冗長性修正 | 2025-08-06 | #441 | [`98fbb382`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/98fbb3827e30e35f23aa3f4ed5c045b0cdc57890) | #364 |
+| [`410f8f6d`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/410f8f6db8011a165f4b8fb4b3f8db24f22b63c3) | Add support for async context management in OpenTelemetry tracing setup. | 2025-11-06 | #551 | [`e2e55e39`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/e2e55e39d54c8f942c1675607a4389621e7aade7) | #364 |
+| [`8e181368`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/8e181368582c17708db9ff38ba122b9b168c7c37) | Fix DID/VC sync batch: improve error handling, logging, and retry logic | 2025-10-30 | #541 | [`b048673d`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/b048673d9e74624340c9701b9c2acad0edca8600) | #331, #362 |
+| [`2b49344c`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/2b49344caf56afccae2125ad5be078892568dc57) | test: add Failed evaluation and mixed evaluation VC issuance test coverage | 2025-07-17 | #384 | [`e1be2fae`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/e1be2fae2f207612a0b751a0a1611d95b8cc940c) | #331 |
+| [`3f8bd0c0`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/3f8bd0c09f8e11585ae6bc15c50b174b015f89a0) | Update updatedAt on error and use warn level for timeout errors | 2025-10-29 | #541 | [`b048673d`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/b048673d9e74624340c9701b9c2acad0edca8600) | #346 |
+
+### Verifying this report against the repository
+
+```bash
+git clone https://github.com/Co-Creation-DAO/civicship-api-251127.git
+cd civicship-api-251127
+
+# Every commit cited in this report exists here and is an ancestor of master.
+for c in 2e6cda92 6fe81f23 a0e0673e ff8ade1c cef32756 f06d0cee \
+         eccc464a 1ec42f5e \
+         3c03de0d d3fdb091 5514d9a9 c7f6bed3 fca0f38a 8e181368 2b49344c \
+         d6661781 7d72d41a a37c3fea 410f8f6d \
+         56d3c966 312b0682 2699ef0f a221a71f \
+         1eb2e76f 77ffded7 beec4199 2ce78add \
+         aa725ad9 dbddb827 c9a74271 f8fdbfc6 \
+         52fc5221 44391809 b516f25e 3f8bd0c0 \
+         749c31e7 75c088fc 70eba9e1 \
+         338ee65c 08a699da \
+         28260395 7ba3ae6e 40ebdb61 \
+         e2e55e39 b048673d 98fbb382 e1be2fae; do
+  if git merge-base --is-ancestor "$c" origin/master 2>/dev/null; then
+    echo "OK      $c  $(git log -1 --format=%s "$c")"
+  else
+    echo "MISSING $c"
+  fi
+done
+
+# The upstream PR number of any merge commit is in its own commit message.
+git log --oneline --grep="Merge pull request #360"
+git log --oneline --grep="Merge pull request #364"
+```
+
+---
+
 ## 📊 Executive Summary
 
 ### Report Period
-- **Analysis Period**: June 2024 - January 2025
+- **Analysis Period**: July 2025 - November 2025 (commit dates of the fixes cited below, verified against `master` in this repository)
 - **Total Bug Fixes**: 12 major fixes
 - **Severity Distribution**: Critical (3), High (3), Medium (6)
 - **Test Success Impact**: Improved from 70% to 100% success rate
@@ -17,14 +114,18 @@
 
 ## 🔥 Critical Severity Fixes (3)
 
-### PR #360: Prisma Expired Transaction Error Resolution
+### Upstream PR #360: Prisma Expired Transaction Error Resolution
 
-**Links:**
-- Merge commit: [`2e6cda92`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/2e6cda922) — 本 repo に存在（上流 PR #360 の統合コミット）
-- Related Commits:
-  - [`ff8ade1`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/ff8ade1) - "Switch set_config to transaction scope (TRUE) to fix connection pool pollution"
-  - [`cef3275`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/cef3275) - "Add documentation comment explaining why refreshCurrentPointViewIfNotExist runs in separate transaction"
-  - [`f06d0ce`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/f06d0ce) - "Fix transaction scope violations by adding tx parameter to read methods"
+**Links** — every reference below resolves in `Co-Creation-DAO/civicship-api-251127`:
+
+- Integration commit of upstream PR #360 (merged 2025-07-10): [`2e6cda92`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/2e6cda922a93c8db8484dfb0423969b8438a8db4)
+- Commits contained in that merge:
+  - [`6fe81f23`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/6fe81f238b138cc2f7fd9c258b4c2c0a792ac636) — "fix: implement transaction splitting to resolve Prisma timeout"
+  - [`a0e0673e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/a0e0673eb7c72c020feec9103a00aa48030e2f50) — "fix: update test assertions for bigint point values"
+- Later hardening of the same defect (transaction scope / connection-pool pollution), merged upstream after PR #360 — these commits are **not** part of PR #360; each is listed with the upstream PR that actually merged it:
+  - [`ff8ade1c`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/ff8ade1c70c84d1d39f44c7fbb9ff3ac56b209ea) — "Switch set_config to transaction scope (TRUE) to fix connection pool pollution" (committed 2025-11-06; merged via upstream PR #551, merge commit [`e2e55e39`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/e2e55e39d54c8f942c1675607a4389621e7aade7))
+  - [`cef32756`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/cef327568dd6f38dd73e6318f4c4e8023a856203) — "Add documentation comment explaining why refreshCurrentPointViewIfNotExist runs in separate transaction" (committed 2025-11-06; merged via upstream PR #551, merge commit [`e2e55e39`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/e2e55e39d54c8f942c1675607a4389621e7aade7))
+  - [`f06d0cee`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/f06d0cee7efa7b0fda9194d9ec310d4b25496e77) — "Fix transaction scope violations by adding tx parameter to read methods" (committed 2025-11-06; merged via upstream PR #551, merge commit [`e2e55e39`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/e2e55e39d54c8f942c1675607a4389621e7aade7))
 
 **Issue:** Long-running transactions exceeding 10-second timeout limit
 
@@ -56,13 +157,14 @@ git show cef3275 src/application/domain/account/wallet/service.ts
   - `grantCommunityPoint.test.ts`
   - `donateSelfPoint.test.ts`
 
-### PR #339: BigInt GraphQL Processing Fix
+### Upstream PR #339: BigInt GraphQL Processing Fix
 
-**Links:**
-- Merge commit: [`eccc464a`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/eccc464a9) — 本 repo に存在（上流 PR #339 の統合コミット）
-- Related Commits:
-  - [`1ec42f5e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/1ec42f5e) - "feat: add `createdByUser` field to `GqlTransaction` type"
-- Implementation: Current GraphQL scalar configuration
+**Links** — every reference below resolves in `Co-Creation-DAO/civicship-api-251127`:
+
+- Integration commit of upstream PR #339 (merged 2025-07-08): [`eccc464a`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/eccc464a908f920bddd1779d2aa002688f9d2a6c)
+- Commits contained in that merge:
+  - [`1ec42f5e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/1ec42f5e1adfd3175d69a70d135cc4cf16a0f968) — "feat: add `createdByUser` field to `GqlTransaction` type"
+- Implementation: GraphQL `BigInt` scalar configuration (see *Solution* below)
 
 **Issue:** GraphQL serialization failures with large numeric values
 
@@ -92,13 +194,19 @@ grep -A3 "current_point\|accumulated_point" src/infrastructure/prisma/schema.pri
 - Boundary value tests: [`src/__tests__/integration/pointTransfer/boundaryValues.test.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/__tests__/integration/pointTransfer/boundaryValues.test.ts)
 - Large amount transaction tests
 
-### PR #331: VC Issuance DID Dependency Fix
+### Upstream PR #331: VC Issuance DID Dependency Fix
 
-**Links:**
-- Merge commit: [`3c03de0d`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/3c03de0d1) — 本 repo に存在（上流 PR #331 の統合コミット）
-- Related Commits:
-  - [`8e18136`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/8e18136) - "Fix DID/VC sync batch: improve error handling, logging, and retry logic"
-  - [`2b49344`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/2b49344) - "test: add Failed evaluation and mixed evaluation VC issuance test coverage"
+**Links** — every reference below resolves in `Co-Creation-DAO/civicship-api-251127`:
+
+- Integration commit of upstream PR #331 (merged 2025-07-08): [`3c03de0d`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/3c03de0d13982fbc55798193d5a13dc63ffe0b90)
+- Commits contained in that merge:
+  - [`d3fdb091`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/d3fdb09110d97d8547c6ee27cdbb99794f7661ab) — "``` fix: handle missing User DID by postponing VC issuance"
+  - [`5514d9a9`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/5514d9a9ab467abc016761e7b7d1969da42d8047) — "fix: handle existing VC issuance requests and improve error handling"
+  - [`c7f6bed3`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/c7f6bed3cdefd861e72464240f80bfc4f4dfecad) — "fix: ensure only VCs without records are included in sync query"
+  - [`fca0f38a`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/fca0f38a399a935e4fb73b8028bba31e475f50be) — "fix: prevent duplicate VC issuance requests for users"
+- Later related work on the same DID/VC path, merged upstream after PR #331 — these commits are **not** part of PR #331; each is listed with the upstream PR that actually merged it:
+  - [`8e181368`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/8e181368582c17708db9ff38ba122b9b168c7c37) — "Fix DID/VC sync batch: improve error handling, logging, and retry logic" (committed 2025-10-30; merged via upstream PR #541, merge commit [`b048673d`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/b048673d9e74624340c9701b9c2acad0edca8600))
+  - [`2b49344c`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/2b49344caf56afccae2125ad5be078892568dc57) — "test: add Failed evaluation and mixed evaluation VC issuance test coverage" (committed 2025-07-17; merged via upstream PR #384, merge commit [`e1be2fae`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/e1be2fae2f207612a0b751a0a1611d95b8cc940c))
 
 **Issue:** VC issuance failures when User DID unavailable
 
@@ -132,13 +240,16 @@ grep -r "issuance" src/application/domain/ --include="*.ts" | head -10
 
 ## ⚠️ High Severity Fixes (3)
 
-### PR #364: Async Promise Handling Fix
+### Upstream PR #364: Async Promise Handling Fix
 
-**Links:**
-- Merge commit: [`d6661781`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/d6661781f) — 本 repo に存在（上流 PR #364 の統合コミット）
-- Related Commits:
-  - [`a37c3fe`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/a37c3fe) - "fix: Geminiレビュー対応 - 型アサーション除去とasync/await冗長性修正"
-  - [`410f8f6`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/410f8f6) - "Add support for async context management in OpenTelemetry tracing setup"
+**Links** — every reference below resolves in `Co-Creation-DAO/civicship-api-251127`:
+
+- Integration commit of upstream PR #364 (merged 2025-07-10): [`d6661781`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/d6661781f2beb547571cac54fefa1e1897cf4151)
+- Commits contained in that merge:
+  - [`7d72d41a`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/7d72d41a915a703599bfe3a898a88683cf867757) — "feat: ensure VC issuance occurs sequentially during evaluation creation"
+- Later related async/await work, merged upstream after PR #364 — these commits are **not** part of PR #364; each is listed with the upstream PR that actually merged it:
+  - [`a37c3fea`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/a37c3feae0d8c33e84c67009b3b04b85f6a7749a) — "fix: Geminiレビュー対応 - 型アサーション除去とasync/await冗長性修正" (committed 2025-08-06; merged via upstream PR #441, merge commit [`98fbb382`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/98fbb3827e30e35f23aa3f4ed5c045b0cdc57890))
+  - [`410f8f6d`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/410f8f6db8011a165f4b8fb4b3f8db24f22b63c3) — "Add support for async context management in OpenTelemetry tracing setup." (committed 2025-11-06; merged via upstream PR #551, merge commit [`e2e55e39`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/e2e55e39d54c8f942c1675607a4389621e7aade7))
 
 **Issue:** Unhandled Promise rejections causing silent failures
 
@@ -168,11 +279,17 @@ grep -r "catch.*error" src/application/domain/notification/ --include="*.ts"
 - Notification service: [`src/application/domain/notification/service.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/notification/service.ts) - Async notification sending with proper error handling
 - Transaction usecase: [`src/application/domain/transaction/usecase.ts:141-155`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/transaction/usecase.ts#L141-L155) - Async notification with catch blocks
 
-### PR #362: VC/DID Issuance Workflow Refactor
+### Upstream PR #362: VC/DID Issuance Workflow Refactor
 
-**Links:**
-- Merge commit: [`56d3c966`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/56d3c9662) — 本 repo に存在（上流 PR #362 の統合コミット）
-- Related Commit: [`8e18136`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/8e18136) - DID/VC sync batch improvements
+**Links** — every reference below resolves in `Co-Creation-DAO/civicship-api-251127`:
+
+- Integration commit of upstream PR #362 (merged 2025-07-10): [`56d3c966`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/56d3c966256c411a16340c5ad99854305a1781d8)
+- Commits contained in that merge:
+  - [`312b0682`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/312b06826211638d1c452a91dfa1917832add8f9) — "fix: Ensure proper await handling in VC issuance request"
+  - [`2699ef0f`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/2699ef0fcb3b9f7792f9f0cbf1310c483e3b538e) — "refactor: remove DID issuance logic from IdentityUseCase"
+  - [`a221a71f`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/a221a71f4876343a33ddc6e9234d8ad444417a93) — "fix: handle missing jobId in DID issuance response"
+- Later related work on the same DID/VC issuance path, merged upstream after PR #362 — these commits are **not** part of PR #362; each is listed with the upstream PR that actually merged it:
+  - [`8e181368`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/8e181368582c17708db9ff38ba122b9b168c7c37) — "Fix DID/VC sync batch: improve error handling, logging, and retry logic" (committed 2025-10-30; merged via upstream PR #541, merge commit [`b048673d`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/b048673d9e74624340c9701b9c2acad0edca8600))
 
 **Issue:** Race conditions in external API calls for credential issuance
 
@@ -199,14 +316,16 @@ grep -r "issuance\|credential" src/application/domain/ --include="*.ts" -A3
 - DID/VC domain implementation: `src/application/domain/` - Credential issuance logic
 - External API integration: `src/infrastructure/libs/` - External service connectors
 
-### PR #335: BigInt Type System Enhancement
+### Upstream PR #335: BigInt Type System Enhancement
 
-**Links:**
-- Merge commit: [`1eb2e76f`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/1eb2e76f9) — 本 repo に存在（上流 PR #335 の統合コミット）
-- Related Commits:
-  - [`77ffded7`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/77ffded7) - "feat: add BigInt scalar support to GraphQL schema"
-  - [`2ce78add`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/2ce78add) - "fix: correct type of `currentBalance` in `InsufficientBalanceError`"
-- Implementation: GraphQL scalar type configuration
+**Links** — every reference below resolves in `Co-Creation-DAO/civicship-api-251127`:
+
+- Integration commit of upstream PR #335 (merged 2025-07-08): [`1eb2e76f`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/1eb2e76f970f72c09856efdcb15e43e4230e76cf)
+- Commits contained in that merge:
+  - [`77ffded7`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/77ffded77f63f0525dd65c1417f3496de1251acd) — "feat: add BigInt scalar support to GraphQL schema"
+  - [`beec4199`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/beec41993eb8f374eb4e46a69af07b3c4eb1565c) — "``` refactor: update point fields to use BigInt instead of Int"
+  - [`2ce78add`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/2ce78add360f200354d423d74394349c25706b87) — "fix: correct type of `currentBalance` in `InsufficientBalanceError`"
+- Implementation: GraphQL scalar type configuration (see *Solution* below)
 
 **Issue:** Type inconsistencies between GraphQL schema and TypeScript
 
@@ -240,13 +359,14 @@ grep -E "Int|BigInt|Decimal" src/infrastructure/prisma/schema.prisma | head -20
 
 ## 📋 Medium Severity Fixes (6)
 
-### PR #371: Unit Test Prisma Enum Alignment
+### Upstream PR #371: Unit Test Prisma Enum Alignment
 
-**Links:**
-- Merge commit: [`aa725ad9`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/aa725ad9c) — 本 repo に存在（上流 PR #371 の統合コミット）
-- Related Commits:
-  - [`dbddb827`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/dbddb827) - "fix: use proper Prisma enums in unit tests"
-- Implementation: Test files throughout `src/__tests__/`
+**Links** — every reference below resolves in `Co-Creation-DAO/civicship-api-251127`:
+
+- Integration commit of upstream PR #371 (merged 2025-07-11): [`aa725ad9`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/aa725ad9c407fd7661552853af6ff23c249b9f79)
+- Commits contained in that merge:
+  - [`dbddb827`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/dbddb8278dcd08c62f3726baa024e5e48dcc68e2) — "fix: use proper Prisma enums in unit tests"
+- Implementation: test files throughout `src/__tests__/`
 
 **Issue:** Test failures due to enum value mismatches
 
@@ -276,12 +396,13 @@ grep -A5 "^enum " src/infrastructure/prisma/schema.prisma
 - Test factories: [`src/infrastructure/prisma/factories/`](https://github.com/Co-Creation-DAO/civicship-api-251127/tree/677f46e9/src/infrastructure/prisma/factories) - Type-safe test data generation
 - Integration tests: [`src/__tests__/integration/`](https://github.com/Co-Creation-DAO/civicship-api-251127/tree/677f46e9/src/__tests__/integration) - Uses proper enums
 
-### PR #357: Opportunity Data Converter Validation
+### Upstream PR #357: Opportunity Data Converter Validation
 
-**Links:**
-- Merge commit: [`c9a74271`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/c9a74271a) — 本 repo に存在（上流 PR #357 の統合コミット）
-- Related Commits:
-  - [`f8fdbfc6`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/f8fdbfc6) - "refactor: refactor `create` method in opportunity data converter"
+**Links** — every reference below resolves in `Co-Creation-DAO/civicship-api-251127`:
+
+- Integration commit of upstream PR #357 (merged 2025-07-10): [`c9a74271`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/c9a74271ad271efb474aa42a1efbed419f5e4d1e)
+- Commits contained in that merge:
+  - [`f8fdbfc6`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/f8fdbfc6e2d059dd32dc97cf663f1adda66f81a7) — "refactor: refactor `create` method in opportunity data converter"
 - Implementation: [`src/application/domain/experience/opportunity/data/converter.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/experience/opportunity/data/converter.ts)
 
 **Issue:** Invalid data creation due to insufficient validation
@@ -308,11 +429,16 @@ grep -r "validate\|validation" src/application/domain/experience/opportunity/ --
 - Converter: [`src/application/domain/experience/opportunity/data/converter.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/experience/opportunity/data/converter.ts)
 - Service validation: [`src/application/domain/experience/opportunity/service.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/experience/opportunity/service.ts)
 
-### PR #346: Transaction Timeout and Logging
+### Upstream PR #346: Transaction Timeout and Logging
 
-**Links:**
-- Merge commit: [`52fc5221`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/52fc52214) — 本 repo に存在（上流 PR #346 の統合コミット）
-- Related Commit: [`3f8bd0c`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/3f8bd0c) - "Update updatedAt on error and use warn level for timeout errors"
+**Links** — every reference below resolves in `Co-Creation-DAO/civicship-api-251127`:
+
+- Integration commit of upstream PR #346 (merged 2025-07-09): [`52fc5221`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/52fc52214963e537a6e1b91cc24d1f5a2990e614)
+- Commits contained in that merge:
+  - [`44391809`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/44391809c8ccef1c713c17dbd3dfecf2ddb3c430) — "enhance: Add transaction duration logging for onlyBelongingCommunity and bypassRls"
+  - [`b516f25e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/b516f25ea3b152fa9880098b20d3da3a8915eb8f) — "enhance: Add logging for slow Prisma queries"
+- Later related work on transaction/materialized-view error handling, merged upstream after PR #346 — these commits are **not** part of PR #346; each is listed with the upstream PR that actually merged it:
+  - [`3f8bd0c0`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/3f8bd0c09f8e11585ae6bc15c50b174b015f89a0) — "Update updatedAt on error and use warn level for timeout errors" (committed 2025-10-29; merged via upstream PR #541, merge commit [`b048673d`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/b048673d9e74624340c9701b9c2acad0edca8600))
 
 **Issue:** Poor visibility into transaction performance issues
 
@@ -338,14 +464,15 @@ grep -r "timeout\|logger" src/application/domain/transaction/ --include="*.ts"
 - Transaction error handling: [`src/application/domain/transaction/`](https://github.com/Co-Creation-DAO/civicship-api-251127/tree/677f46e9/src/application/domain/transaction)
 - Logging: [`src/infrastructure/logging/`](https://github.com/Co-Creation-DAO/civicship-api-251127/tree/677f46e9/src/infrastructure/logging)
 
-### PR #329: Token Usage and Issuer Standardization
+### Upstream PR #329: Token Usage and Issuer Standardization
 
-**Links:**
-- Merge commit: [`749c31e7`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/749c31e7f) — 本 repo に存在（上流 PR #329 の統合コミット）
-- Related Commits:
-  - [`75c088fc`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/75c088fc) - "fix: ensure consistent use of 主催者 as the issuer name"
-  - [`70eba9e1`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/70eba9e1) - "fix: replace `phoneIdentity.authToken` fallback with `token` in API calls"
-- Implementation: Authentication middleware
+**Links** — every reference below resolves in `Co-Creation-DAO/civicship-api-251127`:
+
+- Integration commit of upstream PR #329 (merged 2025-07-08): [`749c31e7`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/749c31e7ff827b38994da12283a8b43019600b81)
+- Commits contained in that merge:
+  - [`75c088fc`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/75c088fc5722d0f6750eb3e20566ec8ee2edf4b7) — "fix: ensure consistent use of "主催者" as the issuer name"
+  - [`70eba9e1`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/70eba9e11c2166b92d14e0e87bf2a38452b3f106) — "fix: replace `phoneIdentity.authToken` fallback with `token` in API calls"
+- Implementation: authentication middleware and notification presenter (see *Solution* below)
 
 **Issue:** Inconsistent authentication token usage across services
 
@@ -372,13 +499,14 @@ git log --oneline --grep="auth\|session\|cookie" | head -10
 - Auth middleware: [`src/presentation/middleware/auth/index.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/presentation/middleware/auth/index.ts)
 - Header extraction: [`src/presentation/middleware/auth/extract-headers.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/presentation/middleware/auth/extract-headers.ts)
 
-### PR #327: Community Association Fix
+### Upstream PR #327: Community Association Fix
 
-**Links:**
-- Merge commit: [`338ee65c`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/338ee65cf) — 本 repo に存在（上流 PR #327 の統合コミット）
-- Related Commits:
-  - [`08a699da`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/08a699da) - "feat: add community association to participation creation"
-- Implementation: Participation domain
+**Links** — every reference below resolves in `Co-Creation-DAO/civicship-api-251127`:
+
+- Integration commit of upstream PR #327 (merged 2025-07-07): [`338ee65c`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/338ee65cfe5b24ab2ac2e6a55cf5a08a751068f6)
+- Commits contained in that merge:
+  - [`08a699da`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/08a699da68800d2a298a32321f55f4d94beff85e) — "feat: add community association to participation creation"
+- Implementation: participation domain (see *Solution* below)
 
 **Issue:** Participation records missing community relationships
 
@@ -404,12 +532,14 @@ grep -A10 "model Participation" src/infrastructure/prisma/schema.prisma
 - Participation service: [`src/application/domain/experience/participation/service.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/experience/participation/service.ts)
 - Schema: [`src/infrastructure/prisma/schema.prisma`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/infrastructure/prisma/schema.prisma) - Participation model
 
-### PR #325: Database Schema Consistency
+### Upstream PR #325: Database Schema Consistency
 
-**Links:**
-- Merge commit: [`28260395`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/282603954) — 本 repo に存在（上流 PR #325 の統合コミット）
-- Related Commits:
-  - [`7ba3ae6e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/7ba3ae6e) - "fix: add rls bypass config for migration"
+**Links** — every reference below resolves in `Co-Creation-DAO/civicship-api-251127`:
+
+- Integration commit of upstream PR #325 (merged 2025-07-04): [`28260395`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/282603954a6650e80a7ced2f96a98fe5a677d10c)
+- Commits contained in that merge:
+  - [`7ba3ae6e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/7ba3ae6e5e4a5528b2aee62d3eda9a52dc7a7417) — "fix: add rls bypass config for migration"
+  - [`40ebdb61`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/40ebdb6148ab57d545daaf457e3d509eb6f5e557) — "Add createdBy field to Transaction model"
 - Migrations: [`src/infrastructure/prisma/migrations/`](https://github.com/Co-Creation-DAO/civicship-api-251127/tree/677f46e9/src/infrastructure/prisma/migrations)
 
 **Issue:** Schema drift between development and production environments
@@ -507,7 +637,7 @@ pnpm db:pull --print
 ```bash
 # Clone the repository
 git clone https://github.com/Co-Creation-DAO/civicship-api-251127.git
-cd civicship-api
+cd civicship-api-251127
 
 # Install dependencies
 pnpm install

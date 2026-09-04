@@ -904,20 +904,34 @@ Transaction 2: Donate 60 points to User C (started simultaneously)
 
 ## ✅ Verification and Testing
 
-### Related Pull Requests
+### Related Fixes
+
+Upstream pull-request numbers below refer to the original development repository. Pull-request
+pages are GitHub metadata and do not migrate with git history, so each fix is identified here by
+its **merge commit in this repository**, which carries the same SHA as the original. See
+[`docs/report/bug_fixes.md`](./bug_fixes.md#-evidence-location-and-traceability) for the full
+mapping and verification steps.
 
 **Critical Fixes:**
-1. **PR #360**: Prisma Expired Transaction Error Resolution
-   - Commits: [`ff8ade1`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/ff8ade1), [`cef3275`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/cef3275), [`f06d0ce`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/f06d0ce)
+
+1. **Upstream PR #360** — Prisma expired-transaction error resolution
+   - Merge commit: [`2e6cda92`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/2e6cda922a93c8db8484dfb0423969b8438a8db4) (merged 2025-07-10)
+   - Commits in that merge: [`6fe81f23`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/6fe81f238b138cc2f7fd9c258b4c2c0a792ac636), [`a0e0673e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/a0e0673eb7c72c020feec9103a00aa48030e2f50)
+   - Later hardening of the same defect (upstream PR #551, merge commit [`e2e55e39`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/e2e55e39d54c8f942c1675607a4389621e7aade7)):
+     [`ff8ade1c`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/ff8ade1c70c84d1d39f44c7fbb9ff3ac56b209ea), [`cef32756`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/cef327568dd6f38dd73e6318f4c4e8023a856203), [`f06d0cee`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/f06d0cee7efa7b0fda9194d9ec310d4b25496e77)
    - Fixed: Transaction timeout by splitting transaction boundaries
    - Impact: 95% reduction in timeout errors
 
-2. **PR #339**: BigInt GraphQL Processing Fix
+2. **Upstream PR #339** — BigInt GraphQL processing fix
+   - Merge commit: [`eccc464a`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/eccc464a908f920bddd1779d2aa002688f9d2a6c) (merged 2025-07-08)
+   - Commit in that merge: [`1ec42f5e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/1ec42f5e1adfd3175d69a70d135cc4cf16a0f968)
    - Fixed: Large number handling in GraphQL scalars
    - Impact: 100% resolution of point calculation display issues
 
-3. **PR #346**: Transaction Timeout and Logging
-   - Commit: [`3f8bd0c`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/3f8bd0c)
+3. **Upstream PR #346** — Transaction timeout and logging
+   - Merge commit: [`52fc5221`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/52fc52214963e537a6e1b91cc24d1f5a2990e614) (merged 2025-07-09)
+   - Commits in that merge: [`44391809`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/44391809c8ccef1c713c17dbd3dfecf2ddb3c430), [`b516f25e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/b516f25ea3b152fa9880098b20d3da3a8915eb8f)
+   - Later related work (upstream PR #541, merge commit [`b048673d`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/b048673d9e74624340c9701b9c2acad0edca8600)): [`3f8bd0c0`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/3f8bd0c09f8e11585ae6bc15c50b174b015f89a0)
    - Added: Comprehensive logging and timeout monitoring
    - Impact: 60% improvement in debugging efficiency
 

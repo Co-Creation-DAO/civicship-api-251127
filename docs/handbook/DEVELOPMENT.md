@@ -8,11 +8,11 @@ This guide describes the day-to-day development steps and workflow for contribut
 
 ```bash
 # Start a Development Session
-cd civicship-api
+cd civicship-api-251127
 
-# Ensure You're on the Latest Developer Branch
-git checkout develop
-git pull origin develop
+# Ensure You're on the Latest Default Branch
+git checkout master
+git pull origin master
 
 # Start the Database Container (If Not Running)
 pnpm container:up

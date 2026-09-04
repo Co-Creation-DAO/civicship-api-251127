@@ -28,10 +28,10 @@ npm install -g pnpm
 ```bash
 # Clone the repository (if not already done)
 git clone https://github.com/Co-Creation-DAO/civicship-api-251127.git
-cd civicship-api
+cd civicship-api-251127
 
-# Switch to the develop branch
-git checkout develop
+# Switch to the default branch
+git checkout master
 
 # Install all dependencies
 pnpm install
