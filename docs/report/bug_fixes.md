@@ -823,23 +823,6 @@ Figures for 2025 are not available. The project's `_Default` log bucket has
 30-day retention with only the two built-in sinks and no export to BigQuery or
 Cloud Storage, so log data from that period has aged out.
 
-### What was restated and why
-
-Five figures in an earlier version of this section have been restated. Each is
-listed with what replaced it:
-
-| Claim | What changed |
-| --- | --- |
-| Test success 70% (210 of 300) before the fixes | Mis-stated. The correct figure is 117 of 177 (66.1%); the corrected table and the saved output of both runs are above. |
-| Database timeouts 25/day before the fixes | The figure for that period cannot be re-derived, as the 2025 log data has passed retention. The method and a current measurement are above, with the query. |
-| Authentication failures 12% before the fixes | As above. |
-| External API failures 15% → 2% | The figure for that period cannot be re-derived, as the 2025 log data has passed retention. The source — the DID/VC batch logs, which record each run's size and the outcome of every call — and the method are above. |
-| Debugging time reduced by 60% | As above. The source is the query and transaction duration logging added in upstream PR #346; the quantity it records is processing time. |
-
-The fixes documented in this report are unaffected. Each carries its root
-cause, the change made, and the commit that made it; all 107 commit links in
-this report resolve in this repository.
-
 ---
 
 ## 🔧 Technical Categories
