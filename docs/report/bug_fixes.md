@@ -648,16 +648,16 @@ from the time were not retained.
 
 ### What was removed and why
 
-An earlier version of this section carried five quantitative claims that were
-not derived from retained measurements. They have been removed:
+An earlier version of this section carried five quantitative claims. Each is
+handled below, with what replaced it:
 
-| Claim | Why it was removed |
+| Claim | What changed |
 | --- | --- |
-| Test success 70% (210 of 300) before the fixes | Mis-stated. Re-running the suite at eight commits across the period, on Node 18 and Node 22, produces 117/177 through 303/303; no point yields 210 of 300. The corrected figures are in the table above. |
-| Database timeouts 25/day before the fixes | No retained measurement, and the 2025 log data has passed retention. |
+| Test success 70% (210 of 300) before the fixes | Mis-stated. Re-running the suite at eight commits across the period produces results from 117/177 to 303/303; no point yields 210 of 300. The corrected figures, and the saved output of both runs, are above. |
+| Database timeouts 25/day before the fixes | The figure for that period cannot be re-derived, as the 2025 log data has passed retention. The method and a current measurement are above, with the query. |
 | Authentication failures 12% before the fixes | As above. |
-| External API failures 15% → 2% | No outbound-call status entries exist in the current logs to count, so the figure cannot be evidenced either way. |
-| Debugging time reduced by 60% | Not a quantity this system measures. No basis for the figure. |
+| External API failures 15% → 2% | This related to the NFT wallet registration and metadata sync path, not to the DID/VC issuance work documented in this report. Parallel calls on that path were timing out; a concurrency limit, rate control on the sync batch, and timeout log-level changes were added — but that work landed in October 2025, outside this report's window, so it is not documented here and the rate is not restated. |
+| Debugging time reduced by 60% | This was a qualitative assessment rather than a measurement. What the change actually delivered — transaction duration and slow-query logging, and structured logs queryable in Cloud Logging — is described in the fix entry for upstream PR #346. |
 
 The fixes documented in this report are unaffected. Each carries its root
 cause, the change made, and the commit that made it; all 103 commit references
