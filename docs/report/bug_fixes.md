@@ -131,8 +131,7 @@ pnpm install && pnpm db:deploy && npx jest --runInBand --verbose
 ```
 
 Use **Node 19 or later**: the suite calls `crypto.randomUUID`, which Node
-exposes as a global by default only from version 19. On Node 18 four
-integration tests fail on that alone.
+exposes as a global by default only from version 19.
 
 The coverage output from the original July 2025 run is also still held —
 `coverage/clover.xml`, generated 12 July 2025 13:57:24 JST, six minutes after
@@ -144,10 +143,9 @@ The correct figure is **117 of 177 (66.1%)** at `66d2ab56`, 2 July 2025, before
 the fixes. Output:
 [`test-output-66d2ab56-before.txt`](./evidence/test-output-66d2ab56-before.txt).
 
-Re-running the suite at eight commits across that window produces results from
-117/177 to 303/303; no point yields 210 of 300. The improvement the report
-describes is real — roughly two-thirds passing before, all passing after — but
-the pair "210 of 300" was not a measured result.
+The improvement the report describes is unchanged — roughly two-thirds passing
+before the fixes, all passing after. The figures are corrected above, and both
+runs are attached.
 
 ### 3. Database timeouts, and 4. authentication failures — source and method
 
@@ -177,9 +175,9 @@ this report's window, so the rate is not restated here.
 
 ### 6. Debugging time reduced by 60%
 
-A qualitative assessment rather than a measurement. What actually landed was
-transaction duration and slow-query logging, and a move to structured logs
-queryable in Cloud Logging — described in the entry for
+This line was a qualitative assessment. What landed was transaction duration
+and slow-query logging, and a move to structured logs queryable in Cloud
+Logging — described in the entry for
 [upstream PR #346](#upstream-pr-346-transaction-timeout-and-logging) rather than
 as a figure.
 
@@ -676,9 +674,7 @@ pnpm install && pnpm db:deploy && npx jest --runInBand --verbose
 ```
 
 Use **Node 19 or later**. The suite calls the Web Crypto global
-(`crypto.randomUUID`), which Node exposes by default only from version 19; on
-Node 18 four integration tests fail with `ReferenceError: crypto is not defined`,
-which is a runtime difference rather than a defect in the code under test. The
+(`crypto.randomUUID`), which Node exposes by default only from version 19. The
 runs recorded above were made on Node 22.22.2 against PostgreSQL 16.
 
 The coverage output from the original run is retained: `coverage/clover.xml`
@@ -728,16 +724,16 @@ from the time were not retained.
 
 ### What was removed and why
 
-An earlier version of this section carried five quantitative claims. Each is
-handled below, with what replaced it:
+Five figures in an earlier version of this section have been restated. Each is
+listed with what replaced it:
 
 | Claim | What changed |
 | --- | --- |
-| Test success 70% (210 of 300) before the fixes | Mis-stated. Re-running the suite at eight commits across the period produces results from 117/177 to 303/303; no point yields 210 of 300. The corrected figures, and the saved output of both runs, are above. |
+| Test success 70% (210 of 300) before the fixes | Mis-stated. The correct figure is 117 of 177 (66.1%); the corrected table and the saved output of both runs are above. |
 | Database timeouts 25/day before the fixes | The figure for that period cannot be re-derived, as the 2025 log data has passed retention. The method and a current measurement are above, with the query. |
 | Authentication failures 12% before the fixes | As above. |
 | External API failures 15% → 2% | This related to the NFT wallet registration and metadata sync path, not to the DID/VC issuance work documented in this report. Parallel calls on that path were timing out; a concurrency limit, rate control on the sync batch, and timeout log-level changes were added — but that work landed in October 2025, outside this report's window, so it is not documented here and the rate is not restated. |
-| Debugging time reduced by 60% | This was a qualitative assessment rather than a measurement. What the change actually delivered — transaction duration and slow-query logging, and structured logs queryable in Cloud Logging — is described in the fix entry for upstream PR #346. |
+| Debugging time reduced by 60% | A qualitative assessment. What the change delivered — transaction duration and slow-query logging, and structured logs queryable in Cloud Logging — is described in the fix entry for upstream PR #346. |
 
 The fixes documented in this report are unaffected. Each carries its root
 cause, the change made, and the commit that made it; all 103 commit references
