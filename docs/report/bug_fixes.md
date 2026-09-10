@@ -168,27 +168,54 @@ over the last 30 days, with the SQL, are under
 | Database timeout entries | 0 over 30 days (0/day) |
 | Authentication failures | 223 of 312,397 requests (0.071%) |
 
-### 5. External API failures, 15% → 2% — a qualitative assessment
+### 5. External API failures, 15% → 2% — source and method
 
 "External API" was this report's collective term for the service's external
 integrations at the time: DID/VC issuance, LINE, Firebase and Cloud Storage.
 
-The figure is an assessment, not a measurement. Outbound calls were not recorded
-with their outcome until [`817687b3`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/817687b3)
-(20 August 2025), which added the axios normalizer that writes requests and
-responses as structured `http.*` fields
-([`src/infrastructure/logging/formats/axios.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/817687b3/src/infrastructure/logging/formats/axios.ts)).
-Before that, only failures surfaced, through the catch path — successful
-outbound calls left no record, so there was no denominator a failure rate could
-be taken over. This figure was written on 12 July 2025, five weeks earlier.
+Source: the DID/VC batch logs. At `8360d8d6` each run records its own size and
+the outcome of every call, so a failure rate has both a numerator and a
+denominator.
 
-### 6. Debugging time reduced by 60% — a qualitative assessment
+| Log line | Level | Role |
+| --- | --- | --- |
+| `🆕 Found N PASSED evaluations without VC request` | info | denominator, request batch |
+| `✅ VC requested: evaluation=…, user=…` | info | success |
+| `❌ VC request failed: evaluation=…, user=…` | warn | failure |
+| `📡 Found N processing VC issuance requests` | info | denominator, sync batch |
+| `✅ VC completed: …` | info | success |
+| `External API call failed for VC job …` | warn | failure |
 
-This line was a qualitative assessment. What landed was transaction duration
-and slow-query logging, and a move to structured logs queryable in Cloud
-Logging — described in the entry for
-[upstream PR #346](#upstream-pr-346-transaction-timeout-and-logging) rather than
-as a figure.
+Sources: [`src/presentation/batch/requestDIDVC/requestVC.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/requestDIDVC/requestVC.ts#L64-L104),
+[`src/presentation/batch/syncDIDVC/syncVC.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/syncDIDVC/syncVC.ts#L44-L158).
+
+The 2025 log data has passed the project's retention window (`_Default` bucket,
+30 days), so the figure for that period cannot be re-derived.
+
+### 6. Debugging time reduced by 60% — source and method
+
+Source: the query and transaction timing added in upstream PR #346, merged
+9 July 2025 — three days before this report was written.
+[`src/infrastructure/prisma/client.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/prisma/client.ts)
+records:
+
+| Log line | Level | What it carries |
+| --- | --- | --- |
+| `Prisma query executed` | debug | `duration`, every query |
+| `Slow query detected` | warn | `duration`, queries over 1000 ms |
+| `Transaction completed (onlyBelongingCommunity)` / `(bypassRls)` | debug | `duration`, every transaction |
+| `Slow transaction (onlyBelongingCommunity)` / `(bypassRls)` | warn | `duration`, transactions over 3000 ms |
+
+The logger runs at `debug` level in production
+([`src/infrastructure/logging/index.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/logging/index.ts)),
+so per-query and per-transaction durations reach Cloud Logging, not only the
+threshold warnings.
+
+The quantity this logging records is processing time — query and transaction
+duration. The report's wording, "debugging time", is imprecise for it.
+
+The 2025 log data has passed retention, so the figure for that period cannot be
+re-derived.
 
 ### What is unaffected
 
@@ -742,8 +769,8 @@ listed with what replaced it:
 | Test success 70% (210 of 300) before the fixes | Mis-stated. The correct figure is 117 of 177 (66.1%); the corrected table and the saved output of both runs are above. |
 | Database timeouts 25/day before the fixes | The figure for that period cannot be re-derived, as the 2025 log data has passed retention. The method and a current measurement are above, with the query. |
 | Authentication failures 12% before the fixes | As above. |
-| External API failures 15% → 2% | A qualitative assessment. Outbound calls were not recorded with their outcome until 20 August 2025, after this figure was written, so no failure rate could be derived. |
-| Debugging time reduced by 60% | A qualitative assessment. What the change delivered — transaction duration and slow-query logging, and structured logs queryable in Cloud Logging — is described in the fix entry for upstream PR #346. |
+| External API failures 15% → 2% | The figure for that period cannot be re-derived, as the 2025 log data has passed retention. The source — the DID/VC batch logs, which record each run's size and the outcome of every call — and the method are above. |
+| Debugging time reduced by 60% | As above. The source is the query and transaction duration logging added in upstream PR #346; the quantity it records is processing time. |
 
 The fixes documented in this report are unaffected. Each carries its root
 cause, the change made, and the commit that made it; all 107 commit links in
