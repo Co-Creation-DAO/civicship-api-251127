@@ -8,12 +8,12 @@
 
 ## 📋 Table of Contents
 
-1. [System Overview](#system-overview)
-2. [Transaction Processing Flow](#transaction-processing-flow)
-3. [Real-Time Balance Updates](#real-time-balance-updates)
-4. [Batch Processing](#batch-processing)
-5. [Data Consistency and ACID Guarantees](#data-consistency-and-acid-guarantees)
-6. [Verification and Testing](#verification-and-testing)
+1. [System Overview](#-system-overview)
+2. [Transaction Processing Flow](#-transaction-processing-flow)
+3. [Real-Time Balance Updates](#-real-time-balance-updates)
+4. [Batch Processing](#-batch-processing)
+5. [Data Consistency and ACID Guarantees](#-data-consistency-and-acid-guarantees)
+6. [Verification and Testing](#-verification-and-testing)
 
 ---
 
@@ -920,13 +920,15 @@ mapping and verification steps.
    - Later hardening of the same defect (upstream PR #551, merge commit [`e2e55e39`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/e2e55e39d54c8f942c1675607a4389621e7aade7)):
      [`ff8ade1c`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/ff8ade1c70c84d1d39f44c7fbb9ff3ac56b209ea), [`cef32756`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/cef327568dd6f38dd73e6318f4c4e8023a856203), [`f06d0cee`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/f06d0cee7efa7b0fda9194d9ec310d4b25496e77)
    - Fixed: Transaction timeout by splitting transaction boundaries
-   - Impact: 95% reduction in timeout errors
+   - Impact: transaction scope is bounded per operation, so a single long block
+     no longer holds connections from the pool for the duration of the request
 
 2. **Upstream PR #339** — BigInt GraphQL processing fix
    - Merge commit: [`eccc464a`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/eccc464a908f920bddd1779d2aa002688f9d2a6c) (merged 2025-07-08)
    - Commit in that merge: [`1ec42f5e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/1ec42f5e1adfd3175d69a70d135cc4cf16a0f968)
    - Fixed: Large number handling in GraphQL scalars
-   - Impact: 100% resolution of point calculation display issues
+   - Impact: the BigInt scalar serializes large point values through GraphQL
+     without overflow or precision loss
 
 3. **Upstream PR #346** — Transaction timeout and logging
    - Merge commit: [`52fc5221`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/52fc52214963e537a6e1b91cc24d1f5a2990e614) (merged 2025-07-09)
