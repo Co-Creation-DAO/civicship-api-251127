@@ -202,24 +202,27 @@ The 2025 log data has passed the project's retention window (`_Default` bucket,
 ### 6. Debugging time reduced by 60% — source and method
 
 Source: the query and transaction timing added in upstream PR #346, merged
-9 July 2025 — three days before this report was written.
-[`src/infrastructure/prisma/client.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/prisma/client.ts)
-records:
+9 July 2025 — three days before this report was written. This is the full
+inventory of what records elapsed time at `8360d8d6`:
 
-| Log line | Level | What it carries |
+| Source | What it records | Level |
 | --- | --- | --- |
-| `Prisma query executed` | debug | `duration`, every query |
-| `Slow query detected` | warn | `duration`, queries over 1000 ms |
-| `Transaction completed (onlyBelongingCommunity)` / `(bypassRls)` | debug | `duration`, every transaction |
-| `Slow transaction (onlyBelongingCommunity)` / `(bypassRls)` | warn | `duration`, transactions over 3000 ms |
+| [`prisma/client.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/prisma/client.ts#L19-L23) `$on("query")` | Prisma's own `duration`, every query | debug |
+| [`prisma/client.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/prisma/client.ts#L26-L32) slow-query branch | `duration`, queries over 1000 ms | warn |
+| [`prisma/client.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/prisma/client.ts#L66-L84) `onlyBelongingCommunity` | wall-clock `duration`, every transaction | debug, warn over 3000 ms |
+| [`prisma/client.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/prisma/client.ts#L100-L118) `bypassRls` | wall-clock `duration`, every transaction | debug, warn over 3000 ms |
+| Cloud Run request logs | `http_request.latency`, every inbound request | — |
+| [`graphql/server.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/graphql/server.ts#L15-L17) | no timing plugin — the three registered are HTTP drain, GraphQL Armor (static cost, depth and alias limits) and authorization | — |
+| Everything else under `src` | `Date.now()` appears only for expiry, filenames and date comparison | — |
 
 The logger runs at `debug` level in production
-([`src/infrastructure/logging/index.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/logging/index.ts)),
-so per-query and per-transaction durations reach Cloud Logging, not only the
-threshold warnings.
+([`logging/index.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/logging/index.ts)), so the
+per-query and per-transaction durations reach Cloud Logging, not only the two
+threshold warnings. The Cloud Run request records are the same ones the
+authentication query above counts.
 
-The quantity this logging records is processing time — query and transaction
-duration. The report's wording, "debugging time", is imprecise for it.
+The quantity all of these record is processing time. The report's wording,
+"debugging time", states that imprecisely.
 
 The 2025 log data has passed retention, so the figure for that period cannot be
 re-derived.
