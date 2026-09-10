@@ -133,10 +133,12 @@ pnpm install && pnpm db:deploy && npx jest --runInBand --verbose
 Use **Node 19 or later**: the suite calls `crypto.randomUUID`, which Node
 exposes as a global by default only from version 19.
 
-The coverage output from that run is also retained. It is not in this
-repository — `coverage/` is git-ignored — but the file carries an internal
-generation timestamp of 12 July 2025 13:57:24 JST, six minutes after the commit
-above, and can be sent on request.
+Coverage for the same commit is attached as
+[`coverage-clover-8360d8d6.xml`](./evidence/coverage-clover-8360d8d6.xml).
+The original coverage file from July 2025 is also retained outside this
+repository (`coverage/` is git-ignored); it carries an internal generation
+timestamp of 12 July 2025 13:57:24 JST, six minutes after the commit above, and
+can be sent on request.
 
 ### 2. Test success, 70% (210 of 300) — mis-stated, and corrected
 
@@ -678,8 +680,10 @@ Use **Node 19 or later**. The suite calls the Web Crypto global
 (`crypto.randomUUID`), which Node exposes by default only from version 19. The
 runs recorded above were made on Node 22.22.2 against PostgreSQL 16.
 
-The coverage output from the original run is retained outside this repository
-(`coverage/` is git-ignored). It carries an internal generation timestamp of
+Coverage for `8360d8d6` is attached as
+[`coverage-clover-8360d8d6.xml`](./evidence/coverage-clover-8360d8d6.xml).
+The original file from July 2025 is retained outside this repository
+(`coverage/` is git-ignored); it carries an internal generation timestamp of
 12 July 2025 13:57:24 JST — six minutes after `8360d8d6` — and can be sent on
 request.
 
