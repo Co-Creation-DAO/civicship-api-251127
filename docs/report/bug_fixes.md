@@ -188,9 +188,11 @@ inventory at `8360d8d6`:
 | [`libs/firebase.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/libs/firebase.ts) | none | none | no |
 | [`libs/storage.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/libs/storage.ts#L32) | none | `logger.warn(e)` | no |
 
-The logger runs at `debug` level in production
-([`libs/../logging/index.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/logging/index.ts)), so the
-per-call client line reaches Cloud Logging, not only the batch summaries.
+At `8360d8d6` the logger was configured at `debug` level for every environment
+([`logging/index.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/logging/index.ts)), so the per-call
+client line reached Cloud Logging, not only the batch summaries. The deployed
+service now runs at a higher log level and no longer emits `DEBUG` entries, so
+this line covers the period of this report rather than the present day.
 
 The axios normalizer added later ([`817687b3`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/817687b3),
 20 August 2025) rewrote these into structured `http.*` fields. It changed the
@@ -215,11 +217,12 @@ inventory of what records elapsed time at `8360d8d6`:
 | [`graphql/server.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/graphql/server.ts#L15-L17) | no timing plugin — the three registered are HTTP drain, GraphQL Armor (static cost, depth and alias limits) and authorization | — |
 | Everything else under `src` | `Date.now()` appears only for expiry, filenames and date comparison | — |
 
-The logger runs at `debug` level in production
+At `8360d8d6` the logger was configured at `debug` level for every environment
 ([`logging/index.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/logging/index.ts)), so the
-per-query and per-transaction durations reach Cloud Logging, not only the two
-threshold warnings. The Cloud Run request records are the same ones the
-authentication query above counts.
+per-query and per-transaction durations reached Cloud Logging, not only the two
+threshold warnings. The deployed service now runs at a higher log level and no
+longer emits `DEBUG` entries; the two threshold warnings and the Cloud Run
+request records — the same ones the authentication query above counts — remain.
 
 The quantity all of these record is processing time. The report's wording,
 "debugging time", states that imprecisely.
