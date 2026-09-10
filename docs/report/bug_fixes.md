@@ -199,7 +199,11 @@ The axios normalizer added later ([`817687b3`](https://github.com/Co-Creation-DA
 shape of the record, not whether outbound calls were recorded.
 
 The 2025 log data has passed the project's retention window (`_Default` bucket,
-30 days), so the figure for that period cannot be re-derived.
+30 days), so the figure for that period cannot be re-derived. Nor does a current
+measurement stand in for it: over the 30 days ending 10 September 2026, no entry
+matching `DIDVCClient`, `VC requested`, `VC completed`, `DID completed` or
+`External API call failed` appears under any resource type. This repository is a
+snapshot taken 25 November 2025 and the deployed service has moved well past it.
 
 ### 6. Debugging time reduced by 60% — source and method
 
@@ -228,7 +232,10 @@ The quantity all of these record is processing time. The report's wording,
 "debugging time", states that imprecisely.
 
 The 2025 log data has passed retention, so the figure for that period cannot be
-re-derived.
+re-derived. Of the four application-side lines, only the two threshold warnings
+survive the current log level. Over the 30 days ending 10 September 2026,
+`Slow transaction` fires once, at 7,175 ms; the query in
+[Runtime behaviour](#runtime-behaviour) is the method.
 
 ### What is unaffected
 
@@ -743,6 +750,8 @@ are the method; the figures are what they return over the 30 days ending
 | --- | ---: |
 | Database timeout entries | 0 over 30 days (0/day) |
 | Authentication failures | 223 of 312,397 requests (0.071%) |
+| Transactions over 3000 ms | 1 over 30 days (7,175 ms) |
+| DID/VC batch log entries | 0 over 30 days, across every resource type |
 
 ```sql
 -- Database timeout entries, daily
@@ -766,6 +775,26 @@ WHERE timestamp >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 30 DAY)
   AND resource.type = 'cloud_run_revision'
   AND http_request.status IS NOT NULL
 GROUP BY day ORDER BY day;
+
+-- Transactions over the 3000 ms threshold, daily
+SELECT DATE(timestamp) AS day, COUNT(*) AS slow_transactions,
+       MAX(CAST(COALESCE(JSON_VALUE(json_payload, '$.duration'),
+                         JSON_VALUE(json_payload, '$.metadata.duration')) AS INT64)) AS max_ms
+FROM `co-creation-dao-prod.global._Default._AllLogs`
+WHERE timestamp >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 30 DAY)
+  AND resource.type = 'cloud_run_revision'
+  AND REGEXP_CONTAINS(JSON_VALUE(json_payload, '$.message'), r'^Slow transaction')
+GROUP BY day ORDER BY day;
+
+-- DID/VC batch entries, every resource type
+SELECT resource.type AS resource_type, COUNT(*) AS n
+FROM `co-creation-dao-prod.global._Default._AllLogs`
+WHERE timestamp >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 30 DAY)
+  AND REGEXP_CONTAINS(
+        CONCAT(COALESCE(text_payload, ''),
+               COALESCE(TO_JSON_STRING(json_payload), '')),
+        r'DIDVCClient|VC requested|VC completed|DID completed|External API call failed')
+GROUP BY resource_type ORDER BY n DESC;
 ```
 
 Figures for 2025 are not available. The project's `_Default` log bucket has
