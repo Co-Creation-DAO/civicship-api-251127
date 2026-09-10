@@ -111,6 +111,86 @@ git log --oneline --grep="Merge pull request #364"
 
 ---
 
+## 📮 Where the quantitative claims came from
+
+A reviewer asked how and from where five figures in this report were obtained.
+Each is answered here, with the evidence it rests on. The detail is in
+[Impact Analysis](#-impact-analysis).
+
+### 1. Test success, 100% (303 of 303) — accurate, and the output is in this repository
+
+[`test-output-8360d8d6-after.txt`](./evidence/test-output-8360d8d6-after.txt) —
+45 suites, 303 of 303 passing, taken at `8360d8d6`, the commit this report was
+written against (12 July 2025).
+
+To reproduce:
+
+```bash
+git checkout 8360d8d6
+pnpm install && pnpm db:deploy && npx jest --runInBand --verbose
+```
+
+Use **Node 19 or later**: the suite calls `crypto.randomUUID`, which Node
+exposes as a global by default only from version 19. On Node 18 four
+integration tests fail on that alone.
+
+The coverage output from the original July 2025 run is also still held —
+`coverage/clover.xml`, generated 12 July 2025 13:57:24 JST, six minutes after
+that commit.
+
+### 2. Test success, 70% (210 of 300) — mis-stated, and corrected
+
+The correct figure is **117 of 177 (66.1%)** at `66d2ab56`, 2 July 2025, before
+the fixes. Output:
+[`test-output-66d2ab56-before.txt`](./evidence/test-output-66d2ab56-before.txt).
+
+Re-running the suite at eight commits across that window produces results from
+117/177 to 303/303; no point yields 210 of 300. The improvement the report
+describes is real — roughly two-thirds passing before, all passing after — but
+the pair "210 of 300" was not a measured result.
+
+### 3. Database timeouts, and 4. authentication failures — source and method
+
+Both were taken from **Cloud Logging** on the production project. The service
+logs through Winston with `@google-cloud/logging-winston`, and Cloud Run records
+every inbound request with its status code. Timeout entries are counted from
+Prisma's `P2024` and related timeout messages; the authentication rate is
+401/403 responses over total requests in the same window.
+
+The 2025 log data has passed the project's retention window (`_Default` bucket,
+30 days), so the figures for that period cannot be re-derived. The same queries
+over the last 30 days, with the SQL, are under
+[Runtime behaviour](#runtime-behaviour):
+
+| Metric | Measured |
+| --- | ---: |
+| Database timeout entries | 0 over 30 days (0/day) |
+| Authentication failures | 223 of 312,397 requests (0.071%) |
+
+### 5. External API failures, 15% → 2%
+
+This related to the **NFT wallet registration and metadata sync path**, not to
+the DID/VC issuance work documented in this report. Parallel calls on that path
+were timing out; a concurrency limit, rate control on the sync batch, and
+timeout log-level changes were added. That work landed in October 2025, outside
+this report's window, so the rate is not restated here.
+
+### 6. Debugging time reduced by 60%
+
+A qualitative assessment rather than a measurement. What actually landed was
+transaction duration and slow-query logging, and a move to structured logs
+queryable in Cloud Logging — described in the entry for
+[upstream PR #346](#upstream-pr-346-transaction-timeout-and-logging) rather than
+as a figure.
+
+### What is unaffected
+
+The 12 documented fixes and their traceability. Each carries its root cause, the
+change made, and the commit that made it. The report cites 103 distinct commit
+references; all 103 resolve in this repository.
+
+---
+
 ## 🔥 Critical Severity Fixes (3)
 
 ### Upstream PR #360: Prisma Expired Transaction Error Resolution
