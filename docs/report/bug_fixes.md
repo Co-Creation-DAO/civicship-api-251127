@@ -173,21 +173,28 @@ over the last 30 days, with the SQL, are under
 "External API" was this report's collective term for the service's external
 integrations at the time: DID/VC issuance, LINE, Firebase and Cloud Storage.
 
-Source: the DID/VC batch logs. At `8360d8d6` each run records its own size and
-the outcome of every call, so a failure rate has both a numerator and a
-denominator.
+Of those, the paths that log both outcomes — so that a failure rate has a
+denominator as well as a numerator — are the DID/VC ones. This is the full
+inventory at `8360d8d6`:
 
-| Log line | Level | Role |
-| --- | --- | --- |
-| `🆕 Found N PASSED evaluations without VC request` | info | denominator, request batch |
-| `✅ VC requested: evaluation=…, user=…` | info | success |
-| `❌ VC request failed: evaluation=…, user=…` | warn | failure |
-| `📡 Found N processing VC issuance requests` | info | denominator, sync batch |
-| `✅ VC completed: …` | info | success |
-| `External API call failed for VC job …` | warn | failure |
+| Path | Success side | Failure side | Rate derivable |
+| --- | --- | --- | :-: |
+| [`libs/did.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/libs/did.ts#L22-L43) — the DID/VC HTTP client | `[DIDVCClient] {method} {url} for uid=…`, debug, on every call | `Error calling DID/VC server at …`, error | yes |
+| [`requestDIDVC/requestDID.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/requestDIDVC/requestDID.ts#L49-L81) | `✅ DID request created: …`, after `🆕 Found N users without DID issuance request` | `❌ DID request failed for user …` | yes |
+| [`requestDIDVC/requestVC.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/requestDIDVC/requestVC.ts#L64-L104) | `✅ VC requested: …`, after `🆕 Found N PASSED evaluations without VC request` | `❌ VC request failed: …` | yes |
+| [`syncDIDVC/syncDID.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/syncDIDVC/syncDID.ts#L39-L140) | `✅ DID completed: …`, after `📡 Found N processing DID issuance requests` | `❌ DID failed: …` | yes |
+| [`syncDIDVC/syncVC.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/syncDIDVC/syncVC.ts#L44-L170) | `✅ VC completed: …`, after `📡 Found N processing VC issuance requests` | `External API call failed for VC job …` | yes |
+| [`router/line.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/router/line.ts#L101-L104) | `LINE replyMessage success` | `LINE replyMessage failed` | per message, no batch denominator |
+| [`libs/firebase.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/libs/firebase.ts) | none | none | no |
+| [`libs/storage.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/libs/storage.ts#L32) | none | `logger.warn(e)` | no |
 
-Sources: [`src/presentation/batch/requestDIDVC/requestVC.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/requestDIDVC/requestVC.ts#L64-L104),
-[`src/presentation/batch/syncDIDVC/syncVC.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/syncDIDVC/syncVC.ts#L44-L158).
+The logger runs at `debug` level in production
+([`libs/../logging/index.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/logging/index.ts)), so the
+per-call client line reaches Cloud Logging, not only the batch summaries.
+
+The axios normalizer added later ([`817687b3`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/817687b3),
+20 August 2025) rewrote these into structured `http.*` fields. It changed the
+shape of the record, not whether outbound calls were recorded.
 
 The 2025 log data has passed the project's retention window (`_Default` bucket,
 30 days), so the figure for that period cannot be re-derived.
