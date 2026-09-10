@@ -107,7 +107,7 @@ git log --oneline --grep="Merge pull request #364"
 
 ### Key Metrics
 - **Most Common Categories**: Database/Transaction (4), Type Safety (3), Async Processing (3)
-- **Verification**: Every fix below cites the commit that made it; all 103 commit references in this report resolve in this repository
+- **Verification**: Every fix below cites the commit that made it; all 105 commit references in this report resolve in this repository
 
 ---
 
@@ -133,9 +133,10 @@ pnpm install && pnpm db:deploy && npx jest --runInBand --verbose
 Use **Node 19 or later**: the suite calls `crypto.randomUUID`, which Node
 exposes as a global by default only from version 19.
 
-The coverage output from the original July 2025 run is also still held —
-`coverage/clover.xml`, generated 12 July 2025 13:57:24 JST, six minutes after
-that commit.
+The coverage output from that run is also retained. It is not in this
+repository — `coverage/` is git-ignored — but the file carries an internal
+generation timestamp of 12 July 2025 13:57:24 JST, six minutes after the commit
+above, and can be sent on request.
 
 ### 2. Test success, 70% (210 of 300) — mis-stated, and corrected
 
@@ -184,8 +185,8 @@ as a figure.
 ### What is unaffected
 
 The 12 documented fixes and their traceability. Each carries its root cause, the
-change made, and the commit that made it. The report cites 103 distinct commit
-references; all 103 resolve in this repository.
+change made, and the commit that made it. The report cites 105 distinct commit
+references; all 105 resolve in this repository.
 
 ---
 
@@ -677,9 +678,10 @@ Use **Node 19 or later**. The suite calls the Web Crypto global
 (`crypto.randomUUID`), which Node exposes by default only from version 19. The
 runs recorded above were made on Node 22.22.2 against PostgreSQL 16.
 
-The coverage output from the original run is retained: `coverage/clover.xml`
-carries an internal generation timestamp of 12 July 2025 13:57:24 JST — six
-minutes after `8360d8d6`.
+The coverage output from the original run is retained outside this repository
+(`coverage/` is git-ignored). It carries an internal generation timestamp of
+12 July 2025 13:57:24 JST — six minutes after `8360d8d6` — and can be sent on
+request.
 
 ### Runtime behaviour
 
@@ -736,7 +738,7 @@ listed with what replaced it:
 | Debugging time reduced by 60% | A qualitative assessment. What the change delivered — transaction duration and slow-query logging, and structured logs queryable in Cloud Logging — is described in the fix entry for upstream PR #346. |
 
 The fixes documented in this report are unaffected. Each carries its root
-cause, the change made, and the commit that made it; all 103 commit references
+cause, the change made, and the commit that made it; all 105 commit references
 in this report resolve in this repository.
 
 ---
