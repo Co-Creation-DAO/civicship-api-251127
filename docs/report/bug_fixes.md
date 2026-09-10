@@ -107,7 +107,7 @@ git log --oneline --grep="Merge pull request #364"
 
 ### Key Metrics
 - **Most Common Categories**: Database/Transaction (4), Type Safety (3), Async Processing (3)
-- **Verification**: Every fix below cites the commit that made it; all 105 commit references in this report resolve in this repository
+- **Verification**: Every fix below cites the commit that made it; all 107 commit links in this report (50 distinct commits) resolve in this repository
 
 ---
 
@@ -187,8 +187,8 @@ as a figure.
 ### What is unaffected
 
 The 12 documented fixes and their traceability. Each carries its root cause, the
-change made, and the commit that made it. The report cites 105 distinct commit
-references; all 105 resolve in this repository.
+change made, and the commit that made it. The report contains 107 commit links
+covering 50 distinct commits; all resolve in this repository.
 
 ---
 
@@ -654,8 +654,7 @@ pnpm db:pull --print
 ## 📈 Impact Analysis
 
 Every figure in this section is either reproducible from this repository or
-accompanied by the query that produced it. Figures that were not measured have
-been removed; see *What was removed and why* at the end of this section.
+accompanied by the query that produced it.
 
 ### Test suite
 
@@ -725,10 +724,9 @@ GROUP BY day ORDER BY day;
 
 Figures for 2025 are not available. The project's `_Default` log bucket has
 30-day retention with only the two built-in sinks and no export to BigQuery or
-Cloud Storage, so log data from that period has aged out, and the query results
-from the time were not retained.
+Cloud Storage, so log data from that period has aged out.
 
-### What was removed and why
+### What was restated and why
 
 Five figures in an earlier version of this section have been restated. Each is
 listed with what replaced it:
@@ -738,12 +736,12 @@ listed with what replaced it:
 | Test success 70% (210 of 300) before the fixes | Mis-stated. The correct figure is 117 of 177 (66.1%); the corrected table and the saved output of both runs are above. |
 | Database timeouts 25/day before the fixes | The figure for that period cannot be re-derived, as the 2025 log data has passed retention. The method and a current measurement are above, with the query. |
 | Authentication failures 12% before the fixes | As above. |
-| External API failures 15% → 2% | This related to the NFT wallet registration and metadata sync path, not to the DID/VC issuance work documented in this report. Parallel calls on that path were timing out; a concurrency limit, rate control on the sync batch, and timeout log-level changes were added — but that work landed in October 2025, outside this report's window, so it is not documented here and the rate is not restated. |
+| External API failures 15% → 2% | This related to the NFT wallet registration and metadata sync path, not to the DID/VC issuance work documented in this report. Parallel calls on that path were timing out; a concurrency limit, rate control on the sync batch, and timeout log-level changes were added. That work landed in October 2025, outside this report's window. |
 | Debugging time reduced by 60% | A qualitative assessment. What the change delivered — transaction duration and slow-query logging, and structured logs queryable in Cloud Logging — is described in the fix entry for upstream PR #346. |
 
 The fixes documented in this report are unaffected. Each carries its root
-cause, the change made, and the commit that made it; all 105 commit references
-in this report resolve in this repository.
+cause, the change made, and the commit that made it; all 107 commit links in
+this report resolve in this repository.
 
 ---
 
