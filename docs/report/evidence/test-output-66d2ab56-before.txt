@@ -1,0 +1,411 @@
+Test output — civicship-api
+Commit      : 66d2ab56
+Commit date : 2025-07-02 23:54:47 +0900
+Run on      : 2026-09-10 02:21:45 UTC
+Runtime     : Node 22.22.2, PostgreSQL 16
+Command     : pnpm install && pnpm db:deploy && npx jest --runInBand --verbose
+
+The suite uses the Web Crypto global (crypto.randomUUID), available by default
+from Node 19. On Node 18 four integration tests fail with "ReferenceError:
+crypto is not defined" — a runtime difference, not a defect in the code.
+
+Application log lines emitted during the run have been filtered out; the jest
+report is reproduced in full below.
+
+==============================================================================
+
+FAIL src/__tests__/integration/pointTransfer/ticketClaim.test.ts (5.533 s)
+  Ticket Claim Tests
+    ✕ should claim ticket successfully (159 ms)
+    ✕ should transfer points correctly between owner and claimer (60 ms)
+    ✕ should refresh currentPointView after claim (56 ms)
+    ✕ should fail if owner wallet has insufficient points (116 ms)
+    ✕ should not allow claiming the same ticket twice (57 ms)
+    ✕ should fail when claimLinkId is invalid (55 ms)
+    ✕ should auto-join community if not a member (103 ms)
+  ● Ticket Claim Tests › should claim ticket successfully
+  ● Ticket Claim Tests › should transfer points correctly between owner and claimer
+  ● Ticket Claim Tests › should refresh currentPointView after claim
+  ● Ticket Claim Tests › should fail if owner wallet has insufficient points
+  ● Ticket Claim Tests › should not allow claiming the same ticket twice
+  ● Ticket Claim Tests › should fail when claimLinkId is invalid
+  ● Ticket Claim Tests › should auto-join community if not a member
+FAIL src/__tests__/auth/mutation.onlySelf.test.ts
+  Self-only mutations - AuthZ
+    ✓ userDeleteMe - same user should be allowed = "user-1" (644 ms)
+    ✓ userDeleteMe - different user should be allowed = "user-2" (13 ms)
+    ✓ userDeleteMe - unauthenticated should be allowed = undefined (6 ms)
+    ✕ membershipAcceptMyInvitation - same user should be allowed = "user-1" (29 ms)
+    ✓ membershipAcceptMyInvitation - different user should be allowed = "user-2" (8 ms)
+    ✓ membershipAcceptMyInvitation - unauthenticated should be allowed = undefined (7 ms)
+    ✕ membershipDenyMyInvitation - same user should be allowed = "user-1" (15 ms)
+    ✓ membershipDenyMyInvitation - different user should be allowed = "user-2" (7 ms)
+    ✓ membershipDenyMyInvitation - unauthenticated should be allowed = undefined (11 ms)
+    ✓ membershipWithdraw - same user should be allowed = "user-1" (7 ms)
+    ✓ membershipWithdraw - different user should be allowed = "user-2" (6 ms)
+    ✓ membershipWithdraw - unauthenticated should be allowed = undefined (6 ms)
+    ✓ reservationCancel - same user should be allowed = "user-1" (6 ms)
+    ✓ reservationCancel - different user should be allowed = "user-2" (6 ms)
+    ✓ reservationCancel - unauthenticated should be allowed = undefined (5 ms)
+  ● Self-only mutations - AuthZ › membershipAcceptMyInvitation - same user should be allowed = "user-1"
+  ● Self-only mutations - AuthZ › membershipDenyMyInvitation - same user should be allowed = "user-1"
+FAIL src/__tests__/auth/mutation.onlyCommunityOwner.test.ts
+  Owner-only mutations - AuthZ
+    ✕ transactionIssueCommunityPoint - role "OWNER" should be allowed = true (355 ms)
+    ✓ transactionIssueCommunityPoint - role "MANAGER" should be allowed = false (13 ms)
+    ✓ transactionIssueCommunityPoint - role "MEMBER" should be allowed = false (7 ms)
+    ✓ transactionIssueCommunityPoint - role undefined should be allowed = false (6 ms)
+    ✕ transactionGrantCommunityPoint - role "OWNER" should be allowed = true (7 ms)
+    ✓ transactionGrantCommunityPoint - role "MANAGER" should be allowed = false (6 ms)
+    ✓ transactionGrantCommunityPoint - role "MEMBER" should be allowed = false (6 ms)
+    ✓ transactionGrantCommunityPoint - role undefined should be allowed = false (5 ms)
+    ✓ communityDelete - role "OWNER" should be allowed = true (6 ms)
+    ✓ communityDelete - role "MANAGER" should be allowed = false (10 ms)
+    ✓ communityDelete - role "MEMBER" should be allowed = false (7 ms)
+    ✓ communityDelete - role undefined should be allowed = false (7 ms)
+    ✕ membershipAssignOwner - role "OWNER" should be allowed = true (11 ms)
+    ✓ membershipAssignOwner - role "MANAGER" should be allowed = false (6 ms)
+    ✓ membershipAssignOwner - role "MEMBER" should be allowed = false (7 ms)
+    ✓ membershipAssignOwner - role undefined should be allowed = false (6 ms)
+    ✓ membershipRemove - role "OWNER" should be allowed = true (6 ms)
+    ✓ membershipRemove - role "MANAGER" should be allowed = false (5 ms)
+    ✓ membershipRemove - role "MEMBER" should be allowed = false (5 ms)
+    ✓ membershipRemove - role undefined should be allowed = false (9 ms)
+  ● Owner-only mutations - AuthZ › transactionIssueCommunityPoint - role "OWNER" should be allowed = true
+  ● Owner-only mutations - AuthZ › transactionGrantCommunityPoint - role "OWNER" should be allowed = true
+  ● Owner-only mutations - AuthZ › membershipAssignOwner - role "OWNER" should be allowed = true
+FAIL src/__tests__/integration/pointTransfer/grantCommunityPoint.test.ts
+  Point Grant Tests
+    ✕ should grant points from community wallet to user (115 ms)
+    ✕ should fail to grant if community wallet has insufficient balance (23 ms)
+  ● Point Grant Tests › should grant points from community wallet to user
+  ● Point Grant Tests › should fail to grant if community wallet has insufficient balance
+FAIL src/__tests__/integration/pointTransfer/evaluatePassParticipation.test.ts
+  Point Reward Tests
+    ✕ creates POINT_REWARD transaction on evaluation (220 ms)
+    ✕ transfers points from opportunityOwner to participation wallet (73 ms)
+    ✕ updates currentPointView after evaluation (73 ms)
+  ● Point Reward Tests › creates POINT_REWARD transaction on evaluation
+  ● Point Reward Tests › transfers points from opportunityOwner to participation wallet
+  ● Point Reward Tests › updates currentPointView after evaluation
+FAIL src/__tests__/integration/walletCreation/grantCommunityPoint.test.ts
+  Transaction GrantCommunityPoint Integration Tests
+    ✕ should grant community points to a user (120 ms)
+  ● Transaction GrantCommunityPoint Integration Tests › should grant community points to a user
+FAIL src/__tests__/integration/pointTransfer/donateSelfPoint.test.ts
+  Point Donate Tests
+    ✕ should donate points when balance is sufficient (121 ms)
+    ✕ should fail to donate if balance is insufficient (28 ms)
+  ● Point Donate Tests › should donate points when balance is sufficient
+  ● Point Donate Tests › should fail to donate if balance is insufficient
+FAIL src/__tests__/integration/walletCreation/reserveParticipation.test.ts
+  Reservation Integration Tests
+      ✕ should create a member wallet if not existed (117 ms)
+      ✕ should not create a member wallet if existed (37 ms)
+  ● Reservation Integration Tests › reserve participation › should create a member wallet if not existed
+  ● Reservation Integration Tests › reserve participation › should not create a member wallet if existed
+FAIL src/__tests__/integration/signUp/signUp.test.ts
+  IdentityUseCase.userCreateAccount
+    ✕ should create user, join community, and create wallet (95 ms)
+  ● IdentityUseCase.userCreateAccount › should create user, join community, and create wallet
+FAIL src/__tests__/integration/pointTransfer/issueCommunityPoint.test.ts
+  Point Issue Tests
+    ✕ should issue community points (106 ms)
+  ● Point Issue Tests › should issue community points
+FAIL src/__tests__/integration/walletCreation/createCommunity.test.ts
+  Community Integration Tests
+      ✕ should create a member wallet if not existed (153 ms)
+  ● Community Integration Tests › create community › should create a member wallet if not existed
+FAIL src/__tests__/unit/experience/participation.service.test.ts
+  ParticipationService
+      ✓ should create participation with uploaded images (3 ms)
+      ✓ should delete after findOrThrow success (1 ms)
+      ✓ should throw NotFoundError if not found (9 ms)
+      ✓ should update participation status (1 ms)
+      ✓ should bulk set status by reservation (1 ms)
+      ✓ should bulk cancel participations
+      ✓ should pass if participation is personal record
+      ✕ should throw ValidationError if participation is not personal record (2 ms)
+  ● ParticipationService › validateDeletable › should throw ValidationError if participation is not personal record
+FAIL src/__tests__/unit/account/identity.service.test.ts
+  IdentityService
+      ✕ should create a user with identity and return the created user data (3 ms)
+      ✓ should throw an error when user creation fails (1 ms)
+      ✓ should delete user and identity when identity exists
+      ✓ should return null when identity does not exist (1 ms)
+      ✓ should throw an error when user deletion fails (1 ms)
+      ✓ should delete the Firebase auth user successfully
+      ✓ should throw an error when Firebase user deletion fails (1 ms)
+  ● IdentityService › createUserAndIdentity › should create a user with identity and return the created user data
+FAIL src/__tests__/unit/experience/reservation.validator.test.ts
+  ReservationValidator
+      ✕ should pass when slot is valid and no conflicts and enough capacity (10 ms)
+      ✕ should throw if slot is not scheduled (2 ms)
+      ✕ should throw if slot has already started (1 ms)
+      ✕ should throw if there are conflicting reservations (8 ms)
+      ✕ should throw if participant count exceeds capacity (2 ms)
+      ✓ should pass and return availableParticipationId if joinable (1 ms)
+      ✕ should throw if reservation is not accepted (1 ms)
+      ✕ should throw if opportunitySlot has already started (2 ms)
+      ✕ should throw if user already joined (2 ms)
+      ✕ should throw if no available participations (2 ms)
+      ✕ should pass if cancellation is before 24 hours (2 ms)
+      ✕ should throw if cancellation is within 24 hours (1 ms)
+  ● ReservationValidator › validateReservable › should pass when slot is valid and no conflicts and enough capacity
+  ● ReservationValidator › validateReservable › should throw if slot is not scheduled
+  ● ReservationValidator › validateReservable › should throw if slot has already started
+  ● ReservationValidator › validateReservable › should throw if there are conflicting reservations
+  ● ReservationValidator › validateReservable › should throw if participant count exceeds capacity
+  ● ReservationValidator › validateJoinable › should throw if reservation is not accepted
+  ● ReservationValidator › validateJoinable › should throw if opportunitySlot has already started
+  ● ReservationValidator › validateJoinable › should throw if user already joined
+  ● ReservationValidator › validateJoinable › should throw if no available participations
+  ● ReservationValidator › validateCancellable › should pass if cancellation is before 24 hours
+  ● ReservationValidator › validateCancellable › should throw if cancellation is within 24 hours
+FAIL src/__tests__/unit/reward/ticket.service.test.ts
+  TicketService
+      ✓ should create multiple tickets (1 ms)
+      ✓ should throw ValidationError if ticketIds not provided (23 ms)
+      ✕ should throw ValidationError if ticketIds and participationIds mismatch (1 ms)
+      ✓ should reserve tickets properly (1 ms)
+      ✓ should update only cancellable tickets (1 ms)
+      ✓ should refund multiple tickets (1 ms)
+      ✓ should create a purchased ticket (1 ms)
+      ✓ should refund a ticket (1 ms)
+      ✓ should throw NotFoundError if ticket not found (1 ms)
+      ✓ should use a ticket (1 ms)
+      ✓ should throw NotFoundError if ticket not found (1 ms)
+  ● TicketService › reserveManyTickets › should throw ValidationError if ticketIds and participationIds mismatch
+FAIL src/__tests__/unit/account/wallet.service.test.ts
+  WalletService
+      ✕ should return all wallets (1 ms)
+      ✕ should return the wallet if found
+      ✕ should return null if not found (1 ms)
+      ✕ should return the member wallet if found
+      ✕ should throw NotFoundError if wallet does not exist
+      ✕ should return the community wallet if found
+      ✕ should throw NotFoundError if no community wallet is found
+      ✕ should return the wallet if found
+      ✕ should throw NotFoundError if wallet does not exist
+      ✕ should create a community wallet
+      ✕ should return existing member wallet if exists
+      ✕ should create new member wallet if not exists
+      ✕ should delete the member wallet
+  ● WalletService › fetchWallets › should return all wallets
+  ● WalletService › findWallet › should return the wallet if found
+  ● WalletService › findWallet › should return null if not found
+  ● WalletService › findMemberWalletOrThrow › should return the member wallet if found
+  ● WalletService › findMemberWalletOrThrow › should throw NotFoundError if wallet does not exist
+  ● WalletService › findCommunityWalletOrThrow › should return the community wallet if found
+  ● WalletService › findCommunityWalletOrThrow › should throw NotFoundError if no community wallet is found
+  ● WalletService › checkIfMemberWalletExists › should return the wallet if found
+  ● WalletService › checkIfMemberWalletExists › should throw NotFoundError if wallet does not exist
+  ● WalletService › createCommunityWallet › should create a community wallet
+  ● WalletService › createMemberWalletIfNeeded › should return existing member wallet if exists
+  ● WalletService › createMemberWalletIfNeeded › should create new member wallet if not exists
+  ● WalletService › deleteMemberWallet › should delete the member wallet
+FAIL src/__tests__/unit/reward/utility.service.test.ts
+  UtilityService
+      ✓ should return utility if found (1 ms)
+      ✓ should return null if not found (1 ms)
+      ✓ should return utility if exists
+      ✓ should throw NotFoundError if not found (10 ms)
+      ✕ should convert input and call repository.create (1 ms)
+      ✓ should call findOrThrow and then delete (1 ms)
+      ✓ should find utility, convert input and update
+      ✓ should pass if all statuses are allowed (1 ms)
+      ✓ should throw if disallowed status is present (1 ms)
+  ● UtilityService › createUtility › should convert input and call repository.create
+FAIL src/__tests__/unit/experience/evaluation.service.test.ts
+  EvaluationService
+      ✕ should create evaluation if status is PASSED or FAILED (1 ms)
+      ✓ should throw ValidationError if status is not PASSED or FAILED (11 ms)
+      ✓ should return participation, opportunity, communityId, userId if all exist (1 ms)
+      ✕ should throw ValidationError if participation is missing (2 ms)
+      ✕ should throw ValidationError if opportunity is missing (2 ms)
+      ✕ should throw ValidationError if communityId is missing (2 ms)
+      ✕ should throw ValidationError if userId is missing (2 ms)
+  ● EvaluationService › createEvaluation › should create evaluation if status is PASSED or FAILED
+  ● EvaluationService › validateParticipationHasOpportunity › should throw ValidationError if participation is missing
+  ● EvaluationService › validateParticipationHasOpportunity › should throw ValidationError if opportunity is missing
+  ● EvaluationService › validateParticipationHasOpportunity › should throw ValidationError if communityId is missing
+  ● EvaluationService › validateParticipationHasOpportunity › should throw ValidationError if userId is missing
+FAIL src/__tests__/unit/account/wallet.validator.test.ts
+  WalletValidator
+      ✓ should validate transfer for GRANT (createIfNeeded = true) (1 ms)
+      ✓ should validate transfer from member to member correctly (1 ms)
+      ✓ should throw InsufficientBalanceError if balance is insufficient (9 ms)
+      ✓ should pass if currentPoint is sufficient (1 ms)
+      ✓ should throw ValidationError if fromWallet is null
+      ✓ should throw ValidationError if toWallet is null (1 ms)
+      ✕ should throw InsufficientBalanceError if currentPoint is missing (1 ms)
+      ✓ should throw InsufficientBalanceError if currentPoint is insufficient (1 ms)
+  ● WalletValidator › validateTransfer › should throw InsufficientBalanceError if currentPoint is missing
+FAIL src/__tests__/unit/experience/reservation.service.test.ts
+  ReservationService
+      ✕ should create a reservation with converted data (2 ms)
+      ✓ should set status for a reservation (1 ms)
+  ● ReservationService › createReservation › should create a reservation with converted data
+PASS src/__tests__/unit/experience/opportunity.service.test.ts
+  OpportunityService
+      ✓ should create an opportunity with uploaded images (2 ms)
+      ✓ should delete an opportunity after finding it (1 ms)
+      ✓ should throw NotFoundError if opportunity not found (10 ms)
+      ✓ should update an opportunity content with uploaded images (1 ms)
+      ✓ should throw NotFoundError if opportunity not found (1 ms)
+      ✓ should throw ValidationError if invalid place input
+      ✓ should set publish status after finding the opportunity (1 ms)
+      ✓ should throw NotFoundError if opportunity not found
+PASS src/__tests__/unit/account/community.service.test.ts
+  CommunityService
+      ✓ should create a community successfully (1 ms)
+      ✓ should throw error if community is not found (9 ms)
+      ✓ should update an existing community (1 ms)
+      ✓ should throw error if community is not found (1 ms)
+      ✓ should delete a community (1 ms)
+PASS src/__tests__/unit/account/user.service.test.ts
+  UserService
+      ✓ should update profile successfully (2 ms)
+      ✓ should upload image if provided (1 ms)
+PASS src/__tests__/unit/reward/ticketClaimLink.service.test.ts
+  TicketClaimLinkService
+      ✓ should throw NotFoundError if link not found (9 ms)
+      ✓ should throw ValidationError if link status is CLAIMED (1 ms)
+      ✓ should throw ValidationError if link status is EXPIRED (1 ms)
+      ✓ should return link if status is ISSUED (1 ms)
+      ✓ should call update with correct arguments
+PASS src/__tests__/unit/account/membership.service.test.ts
+  MembershipService
+      ✓ should fetch memberships (1 ms)
+      ✓ should find membership
+      ✓ should invite a member (1 ms)
+      ✓ should create membership if not found
+      ✓ should update membership if exists but not joined (1 ms)
+      ✓ should set membership status
+      ✓ should throw if membership not found (11 ms)
+      ✓ should update membership role
+      ✓ should throw if membership not found (1 ms)
+      ✓ should delete membership (1 ms)
+      ✓ should throw if membership not found
+PASS src/__tests__/unit/experience/opportunitySlot.service.test.ts
+  OpportunitySlotService
+      ✓ should set hosting status after finding the slot (1 ms)
+      ✓ should throw NotFoundError if slot not found (9 ms)
+      ✓ should do nothing if inputs are empty
+      ✓ should create slots if inputs are provided (1 ms)
+      ✓ should do nothing if inputs are empty
+      ✓ should update slots if inputs are provided (1 ms)
+      ✓ should do nothing if ids are empty
+      ✓ should delete slots if ids are provided
+PASS src/__tests__/unit/transaction.service.test.ts
+  TransactionService
+      ✓ should create transaction and refresh transferPoints (2 ms)
+      ✓ should create transaction and refresh transferPoints (1 ms)
+      ✓ should create transaction and refresh transferPoints (1 ms)
+      ✓ should create transaction and refresh transferPoints (1 ms)
+      ✓ should create transaction and refresh transferPoints
+      ✓ should create transaction and refresh transferPoints (1 ms)
+FAIL src/__tests__/integration/walletCreation/donateSelfPoint.test.ts
+  ● Test suite failed to run
+FAIL src/__tests__/integration/roleManagament/assignOwner.test.ts
+  ● Test suite failed to run
+FAIL src/__tests__/integration/roleManagament/assignMember.test.ts
+  ● Test suite failed to run
+FAIL src/__tests__/integration/roleManagament/assignManager.test.ts
+  ● Test suite failed to run
+FAIL src/__tests__/integration/roleManagament/accpetInvitation.test.ts
+  ● Test suite failed to run
+FAIL src/__tests__/integration/pointTransfer/ticketClaim.test.ts (5.533 s)
+  ● Ticket Claim Tests › should claim ticket successfully
+  ● Ticket Claim Tests › should transfer points correctly between owner and claimer
+  ● Ticket Claim Tests › should refresh currentPointView after claim
+  ● Ticket Claim Tests › should fail if owner wallet has insufficient points
+  ● Ticket Claim Tests › should not allow claiming the same ticket twice
+  ● Ticket Claim Tests › should fail when claimLinkId is invalid
+  ● Ticket Claim Tests › should auto-join community if not a member
+FAIL src/__tests__/auth/mutation.onlySelf.test.ts
+  ● Self-only mutations - AuthZ › membershipAcceptMyInvitation - same user should be allowed = "user-1"
+  ● Self-only mutations - AuthZ › membershipDenyMyInvitation - same user should be allowed = "user-1"
+FAIL src/__tests__/auth/mutation.onlyCommunityOwner.test.ts
+  ● Owner-only mutations - AuthZ › transactionIssueCommunityPoint - role "OWNER" should be allowed = true
+  ● Owner-only mutations - AuthZ › transactionGrantCommunityPoint - role "OWNER" should be allowed = true
+  ● Owner-only mutations - AuthZ › membershipAssignOwner - role "OWNER" should be allowed = true
+FAIL src/__tests__/integration/pointTransfer/grantCommunityPoint.test.ts
+  ● Point Grant Tests › should grant points from community wallet to user
+  ● Point Grant Tests › should fail to grant if community wallet has insufficient balance
+FAIL src/__tests__/integration/pointTransfer/evaluatePassParticipation.test.ts
+  ● Point Reward Tests › creates POINT_REWARD transaction on evaluation
+  ● Point Reward Tests › transfers points from opportunityOwner to participation wallet
+  ● Point Reward Tests › updates currentPointView after evaluation
+FAIL src/__tests__/integration/walletCreation/grantCommunityPoint.test.ts
+  ● Transaction GrantCommunityPoint Integration Tests › should grant community points to a user
+FAIL src/__tests__/integration/pointTransfer/donateSelfPoint.test.ts
+  ● Point Donate Tests › should donate points when balance is sufficient
+  ● Point Donate Tests › should fail to donate if balance is insufficient
+FAIL src/__tests__/integration/walletCreation/reserveParticipation.test.ts
+  ● Reservation Integration Tests › reserve participation › should create a member wallet if not existed
+  ● Reservation Integration Tests › reserve participation › should not create a member wallet if existed
+FAIL src/__tests__/integration/signUp/signUp.test.ts
+  ● IdentityUseCase.userCreateAccount › should create user, join community, and create wallet
+FAIL src/__tests__/integration/pointTransfer/issueCommunityPoint.test.ts
+  ● Point Issue Tests › should issue community points
+FAIL src/__tests__/integration/walletCreation/createCommunity.test.ts
+  ● Community Integration Tests › create community › should create a member wallet if not existed
+FAIL src/__tests__/unit/experience/participation.service.test.ts
+  ● ParticipationService › validateDeletable › should throw ValidationError if participation is not personal record
+FAIL src/__tests__/unit/account/identity.service.test.ts
+  ● IdentityService › createUserAndIdentity › should create a user with identity and return the created user data
+FAIL src/__tests__/unit/experience/reservation.validator.test.ts
+  ● ReservationValidator › validateReservable › should pass when slot is valid and no conflicts and enough capacity
+  ● ReservationValidator › validateReservable › should throw if slot is not scheduled
+  ● ReservationValidator › validateReservable › should throw if slot has already started
+  ● ReservationValidator › validateReservable › should throw if there are conflicting reservations
+  ● ReservationValidator › validateReservable › should throw if participant count exceeds capacity
+  ● ReservationValidator › validateJoinable › should throw if reservation is not accepted
+  ● ReservationValidator › validateJoinable › should throw if opportunitySlot has already started
+  ● ReservationValidator › validateJoinable › should throw if user already joined
+  ● ReservationValidator › validateJoinable › should throw if no available participations
+  ● ReservationValidator › validateCancellable › should pass if cancellation is before 24 hours
+  ● ReservationValidator › validateCancellable › should throw if cancellation is within 24 hours
+FAIL src/__tests__/unit/reward/ticket.service.test.ts
+  ● TicketService › reserveManyTickets › should throw ValidationError if ticketIds and participationIds mismatch
+FAIL src/__tests__/unit/account/wallet.service.test.ts
+  ● WalletService › fetchWallets › should return all wallets
+  ● WalletService › findWallet › should return the wallet if found
+  ● WalletService › findWallet › should return null if not found
+  ● WalletService › findMemberWalletOrThrow › should return the member wallet if found
+  ● WalletService › findMemberWalletOrThrow › should throw NotFoundError if wallet does not exist
+  ● WalletService › findCommunityWalletOrThrow › should return the community wallet if found
+  ● WalletService › findCommunityWalletOrThrow › should throw NotFoundError if no community wallet is found
+  ● WalletService › checkIfMemberWalletExists › should return the wallet if found
+  ● WalletService › checkIfMemberWalletExists › should throw NotFoundError if wallet does not exist
+  ● WalletService › createCommunityWallet › should create a community wallet
+  ● WalletService › createMemberWalletIfNeeded › should return existing member wallet if exists
+  ● WalletService › createMemberWalletIfNeeded › should create new member wallet if not exists
+  ● WalletService › deleteMemberWallet › should delete the member wallet
+FAIL src/__tests__/unit/reward/utility.service.test.ts
+  ● UtilityService › createUtility › should convert input and call repository.create
+FAIL src/__tests__/unit/experience/evaluation.service.test.ts
+  ● EvaluationService › createEvaluation › should create evaluation if status is PASSED or FAILED
+  ● EvaluationService › validateParticipationHasOpportunity › should throw ValidationError if participation is missing
+  ● EvaluationService › validateParticipationHasOpportunity › should throw ValidationError if opportunity is missing
+  ● EvaluationService › validateParticipationHasOpportunity › should throw ValidationError if communityId is missing
+  ● EvaluationService › validateParticipationHasOpportunity › should throw ValidationError if userId is missing
+FAIL src/__tests__/unit/account/wallet.validator.test.ts
+  ● WalletValidator › validateTransfer › should throw InsufficientBalanceError if currentPoint is missing
+FAIL src/__tests__/unit/experience/reservation.service.test.ts
+  ● ReservationService › createReservation › should create a reservation with converted data
+FAIL src/__tests__/integration/walletCreation/donateSelfPoint.test.ts
+  ● Test suite failed to run
+FAIL src/__tests__/integration/roleManagament/assignOwner.test.ts
+  ● Test suite failed to run
+FAIL src/__tests__/integration/roleManagament/assignMember.test.ts
+  ● Test suite failed to run
+FAIL src/__tests__/integration/roleManagament/assignManager.test.ts
+  ● Test suite failed to run
+FAIL src/__tests__/integration/roleManagament/accpetInvitation.test.ts
+  ● Test suite failed to run
+Test Suites: 25 failed, 7 passed, 32 total
+Tests:       60 failed, 117 passed, 177 total
+Snapshots:   0 total
+Time:        13.209 s, estimated 14 s

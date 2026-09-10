@@ -583,15 +583,23 @@ been removed; see *What was removed and why* at the end of this section.
 | Before the fixes | [`66d2ab56`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/66d2ab56) | 2 July 2025 | 117 of 177 passing (66.1%), 32 suites |
 | After the fixes | [`8360d8d6`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/8360d8d6) | 12 July 2025 | **303 of 303 passing (100%), 45 suites** |
 
+The saved output of both runs is in this repository:
+
+- [`test-output-8360d8d6-after.txt`](./evidence/test-output-8360d8d6-after.txt) — 303 of 303 passing
+- [`test-output-66d2ab56-before.txt`](./evidence/test-output-66d2ab56-before.txt) — 117 of 177 passing
+
 To reproduce either row:
 
 ```bash
 git checkout 8360d8d6          # or 66d2ab56
-pnpm install && pnpm db:deploy && pnpm test --runInBand
+pnpm install && pnpm db:deploy && npx jest --runInBand --verbose
 ```
 
-Both rows have been re-run on Node 18 (the runtime of the period) and Node 22,
-with identical results.
+Use **Node 19 or later**. The suite calls the Web Crypto global
+(`crypto.randomUUID`), which Node exposes by default only from version 19; on
+Node 18 four integration tests fail with `ReferenceError: crypto is not defined`,
+which is a runtime difference rather than a defect in the code under test. The
+runs recorded above were made on Node 22.22.2 against PostgreSQL 16.
 
 The coverage output from the original run is retained: `coverage/clover.xml`
 carries an internal generation timestamp of 12 July 2025 13:57:24 JST — six
