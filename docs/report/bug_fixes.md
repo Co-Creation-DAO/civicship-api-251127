@@ -135,10 +135,6 @@ exposes as a global by default only from version 19.
 
 Coverage for the same commit is attached as
 [`coverage-clover-8360d8d6.xml`](./evidence/coverage-clover-8360d8d6.xml).
-The original coverage file from July 2025 is also retained outside this
-repository (`coverage/` is git-ignored); it carries an internal generation
-timestamp of 12 July 2025 13:57:24 JST, six minutes after the commit above, and
-can be sent on request.
 
 ### 2. Test success, 70% (210 of 300) — mis-stated, and corrected
 
@@ -189,21 +185,14 @@ inventory at `8360d8d6`:
 | [`libs/storage.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/libs/storage.ts#L32) | none | `logger.warn(e)` | no |
 
 At `8360d8d6` the logger was configured at `debug` level for every environment
-([`logging/index.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/logging/index.ts)), so the per-call
-client line reached Cloud Logging, not only the batch summaries. The deployed
-service now runs at a higher log level and no longer emits `DEBUG` entries, so
-this line covers the period of this report rather than the present day.
+([`logging/index.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/logging/index.ts)),
+so the per-call client line reached Cloud Logging, not only the batch summaries.
 
-The axios normalizer added later ([`817687b3`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/817687b3),
-20 August 2025) rewrote these into structured `http.*` fields. It changed the
-shape of the record, not whether outbound calls were recorded.
-
-The 2025 log data has passed the project's retention window (`_Default` bucket,
-30 days), so the figure for that period cannot be re-derived. Nor does a current
-measurement stand in for it: over the 30 days ending 10 September 2026, no entry
-matching `DIDVCClient`, `VC requested`, `VC completed`, `DID completed` or
-`External API call failed` appears under any resource type. This repository is a
-snapshot taken 25 November 2025 and the deployed service has moved well past it.
+The figure itself cannot be re-derived. The 2025 log data has passed the
+project's retention window (`_Default` bucket, 30 days), and the current logs do
+not stand in for it: over the 30 days ending 10 September 2026, no entry matching
+`DIDVCClient`, `VC requested`, `VC completed`, `DID completed` or `External API
+call failed` appears under any resource type.
 
 ### 6. Debugging time reduced by 60% — source and method
 
@@ -218,7 +207,7 @@ inventory of what records elapsed time at `8360d8d6`:
 | [`prisma/client.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/prisma/client.ts#L66-L84) `onlyBelongingCommunity` | wall-clock `duration`, every transaction | debug, warn over 3000 ms |
 | [`prisma/client.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/prisma/client.ts#L100-L118) `bypassRls` | wall-clock `duration`, every transaction | debug, warn over 3000 ms |
 | Cloud Run request logs | `http_request.latency`, every inbound request | — |
-| [`graphql/server.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/graphql/server.ts#L15-L17) | no timing plugin — the three registered are HTTP drain, GraphQL Armor (static cost, depth and alias limits) and authorization | — |
+| [`graphql/server.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/graphql/server.ts#L15-L17) | no timing plugin; the three registered are HTTP drain, GraphQL Armor and authorization | — |
 | Everything else under `src` | `Date.now()` appears only for expiry, filenames and date comparison | — |
 
 At `8360d8d6` the logger was configured at `debug` level for every environment
@@ -734,10 +723,6 @@ runs recorded above were made on Node 22.22.2 against PostgreSQL 16.
 
 Coverage for `8360d8d6` is attached as
 [`coverage-clover-8360d8d6.xml`](./evidence/coverage-clover-8360d8d6.xml).
-The original file from July 2025 is retained outside this repository
-(`coverage/` is git-ignored); it carries an internal generation timestamp of
-12 July 2025 13:57:24 JST — six minutes after `8360d8d6` — and can be sent on
-request.
 
 ### Runtime behaviour
 
