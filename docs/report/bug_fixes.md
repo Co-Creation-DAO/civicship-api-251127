@@ -168,15 +168,21 @@ over the last 30 days, with the SQL, are under
 | Database timeout entries | 0 over 30 days (0/day) |
 | Authentication failures | 223 of 312,397 requests (0.071%) |
 
-### 5. External API failures, 15% → 2%
+### 5. External API failures, 15% → 2% — a qualitative assessment
 
-This related to the **NFT wallet registration and metadata sync path**, not to
-the DID/VC issuance work documented in this report. Parallel calls on that path
-were timing out; a concurrency limit, rate control on the sync batch, and
-timeout log-level changes were added. That work landed in October 2025, outside
-this report's window, so the rate is not restated here.
+"External API" was this report's collective term for the service's external
+integrations at the time: DID/VC issuance, LINE, Firebase and Cloud Storage.
 
-### 6. Debugging time reduced by 60%
+The figure is an assessment, not a measurement. Outbound calls were not recorded
+with their outcome until [`817687b3`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/817687b3)
+(20 August 2025), which added the axios normalizer that writes requests and
+responses as structured `http.*` fields
+([`src/infrastructure/logging/formats/axios.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/817687b3/src/infrastructure/logging/formats/axios.ts)).
+Before that, only failures surfaced, through the catch path — successful
+outbound calls left no record, so there was no denominator a failure rate could
+be taken over. This figure was written on 12 July 2025, five weeks earlier.
+
+### 6. Debugging time reduced by 60% — a qualitative assessment
 
 This line was a qualitative assessment. What landed was transaction duration
 and slow-query logging, and a move to structured logs queryable in Cloud
@@ -256,7 +262,7 @@ git show cef3275 src/application/domain/account/wallet/service.ts
 - Database layer: Prisma handles BigInt natively for PostgreSQL numeric types
 - Point calculation: [`src/application/domain/transaction/service.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/transaction/service.ts) - Uses Int type with proper bounds checking
 
-**Impact:** Resolved all point calculation display issues
+**Impact:** The BigInt scalar serializes large point values through GraphQL without overflow or precision loss.
 
 **Verification:**
 ```bash
@@ -341,7 +347,7 @@ grep -r "issuance" src/application/domain/ --include="*.ts" | head -10
 - Added proper error handling for async operations
 - Implementation examples throughout the codebase, particularly in notification and external API calls
 
-**Impact:** Eliminated 15+ silent async failures
+**Impact:** Async operations are awaited rather than discarded with `void`, so a rejected promise surfaces as an error instead of being lost.
 
 **Verification:**
 ```bash
@@ -563,7 +569,7 @@ grep -r "timeout\|logger" src/application/domain/transaction/ --include="*.ts"
 - Consistent issuer naming conventions
 - Improved session cookie handling
 
-**Impact:** Eliminated authentication inconsistencies
+**Impact:** Token extraction and issuer naming follow one convention across services, so a request resolves the same issuer regardless of entry point.
 
 **Verification:**
 ```bash
@@ -631,7 +637,7 @@ grep -A10 "model Participation" src/infrastructure/prisma/schema.prisma
 - Verified schema consistency across environments
 - Improved migration workflow and documentation
 
-**Impact:** Eliminated environment-specific database errors
+**Impact:** All pending migrations are applied and the schema is verified across environments, so development and production run the same schema.
 
 **Verification:**
 ```bash
@@ -736,7 +742,7 @@ listed with what replaced it:
 | Test success 70% (210 of 300) before the fixes | Mis-stated. The correct figure is 117 of 177 (66.1%); the corrected table and the saved output of both runs are above. |
 | Database timeouts 25/day before the fixes | The figure for that period cannot be re-derived, as the 2025 log data has passed retention. The method and a current measurement are above, with the query. |
 | Authentication failures 12% before the fixes | As above. |
-| External API failures 15% → 2% | This related to the NFT wallet registration and metadata sync path, not to the DID/VC issuance work documented in this report. Parallel calls on that path were timing out; a concurrency limit, rate control on the sync batch, and timeout log-level changes were added. That work landed in October 2025, outside this report's window. |
+| External API failures 15% → 2% | A qualitative assessment. Outbound calls were not recorded with their outcome until 20 August 2025, after this figure was written, so no failure rate could be derived. |
 | Debugging time reduced by 60% | A qualitative assessment. What the change delivered — transaction duration and slow-query logging, and structured logs queryable in Cloud Logging — is described in the fix entry for upstream PR #346. |
 
 The fixes documented in this report are unaffected. Each carries its root
