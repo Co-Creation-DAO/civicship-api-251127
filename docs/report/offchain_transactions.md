@@ -933,7 +933,8 @@ mapping and verification steps.
    - Commits in that merge: [`44391809`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/44391809c8ccef1c713c17dbd3dfecf2ddb3c430), [`b516f25e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/b516f25ea3b152fa9880098b20d3da3a8915eb8f)
    - Later related work (upstream PR #541, merge commit [`b048673d`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/b048673d9e74624340c9701b9c2acad0edca8600)): [`3f8bd0c0`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/3f8bd0c09f8e11585ae6bc15c50b174b015f89a0)
    - Added: Comprehensive logging and timeout monitoring
-   - Impact: 60% improvement in debugging efficiency
+   - Impact: transaction duration and slow queries are logged, and timeouts are
+     recorded at warn level, so slow transactions are visible in Cloud Logging
 
 **For complete fix history, see:** [`docs/report/bug_fixes.md`](./bug_fixes.md)
 
