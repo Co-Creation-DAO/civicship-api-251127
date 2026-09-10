@@ -103,12 +103,11 @@ git log --oneline --grep="Merge pull request #364"
 - **Analysis Period**: July 2025 - November 2025 (commit dates of the fixes cited below, verified against `master` in this repository)
 - **Total Bug Fixes**: 12 major fixes
 - **Severity Distribution**: Critical (3), High (3), Medium (6)
-- **Test Success Impact**: Improved from 70% to 100% success rate
+- **Test Suite**: 117 of 177 passing before the fixes, 303 of 303 after — see [Impact Analysis](#-impact-analysis)
 
 ### Key Metrics
-- **Average Fix Time**: 2-3 days per critical issue
 - **Most Common Categories**: Database/Transaction (4), Type Safety (3), Async Processing (3)
-- **Impact Assessment**: All fixes resulted in improved system stability and test reliability
+- **Verification**: Every fix below cites the commit that made it; all 103 commit references in this report resolve in this repository
 
 ---
 
@@ -137,7 +136,7 @@ git log --oneline --grep="Merge pull request #364"
 - Wallet service transaction isolation: [`src/application/domain/account/wallet/service.ts:101-133`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/account/wallet/service.ts#L101-L133)
 - RLS bypass configuration: Changed from `set_config(..., FALSE)` to `set_config(..., TRUE)` for proper transaction scope
 
-**Impact:** Eliminated 95% of transaction timeout errors
+**Impact:** Transaction scope is bounded per operation, so a single long block no longer holds connections from the pool for the duration of the request.
 
 **Verification:**
 ```bash
@@ -218,7 +217,7 @@ grep -A3 "current_point\|accumulated_point" src/infrastructure/prisma/schema.pri
 - Logging enhancements: Detailed logging for debugging DID/VC sync issues
 - Test coverage: Added comprehensive test cases for failure scenarios
 
-**Impact:** Reduced VC issuance failures by 80%
+**Impact:** A missing DID now produces a pending state instead of a hard failure, so one absent credential no longer aborts the surrounding issuance flow.
 
 **Verification:**
 ```bash
@@ -301,7 +300,7 @@ grep -r "catch.*error" src/application/domain/notification/ --include="*.ts"
 - Enhanced logging for debugging credential issuance issues
 - Better separation of concerns between DID and VC issuance flows
 
-**Impact:** Improved external API call success rate to 98%
+**Impact:** The issuance pipeline's async flow and error recovery were restructured, so a failed call is surfaced and handled rather than lost mid-flight.
 
 **Verification:**
 ```bash
@@ -337,7 +336,7 @@ grep -r "issuance\|credential" src/application/domain/ --include="*.ts" -A3
 - Database layer: Prisma handles numeric types with proper TypeScript mappings
 - Application layer: Consistent use of number types for point values
 
-**Impact:** Achieved 100% type safety for numeric operations
+**Impact:** Point values are carried as BigInt end to end, with parsing and validation at the GraphQL boundary rather than implicit coercion.
 
 **Verification:**
 ```bash
@@ -377,7 +376,7 @@ grep -E "Int|BigInt|Decimal" src/infrastructure/prisma/schema.prisma | head -20
 - Replaced hardcoded string values with type-safe enum references
 - Ensured consistency between test data and schema definitions
 
-**Impact:** Achieved 100% unit test success rate
+**Impact:** The suite passes in full at `8360d8d6` — 303 of 303 across 45 suites. See [Impact Analysis](#-impact-analysis) for the reproduction steps.
 
 **Verification:**
 ```bash
@@ -414,7 +413,7 @@ grep -A5 "^enum " src/infrastructure/prisma/schema.prisma
 - Improved type checking for required fields
 - Better error messages for validation failures
 
-**Impact:** Reduced data integrity errors by 90%
+**Impact:** IDs are validated in the converter before the database operation, so malformed references are rejected at the boundary instead of persisting.
 
 **Verification:**
 ```bash
@@ -449,7 +448,7 @@ grep -r "validate\|validation" src/application/domain/experience/opportunity/ --
 - Updated error handling to set updatedAt timestamps
 - Improved observability for transaction issues
 
-**Impact:** Improved debugging efficiency by 60%
+**Impact:** Timeout errors are logged at warn level together with the transaction duration, so slow transactions are visible in Cloud Logging rather than silent.
 
 **Verification:**
 ```bash
@@ -517,7 +516,7 @@ git log --oneline --grep="auth\|session\|cookie" | head -10
 - Fixed bulk creation to maintain community relationships
 - Added validation to prevent orphaned records
 
-**Impact:** Fixed 100% of orphaned participation records
+**Impact:** Bulk participation creation carries `communityId`, so records are no longer written without a community association.
 
 **Verification:**
 ```bash
@@ -573,21 +572,88 @@ pnpm db:pull --print
 
 ## 📈 Impact Analysis
 
-### Test Success Rate Improvement
-- **Before Fixes**: 70% success rate (210/300 tests passing)
-- **After Fixes**: 100% success rate (303/303 tests passing)
-- **Critical Path**: Authentication and transaction tests showed most improvement
+Every figure in this section is either reproducible from this repository or
+accompanied by the query that produced it. Figures that were not measured have
+been removed; see *What was removed and why* at the end of this section.
 
-### System Stability Metrics
-- **Database Timeout Errors**: Reduced from 25/day to <1/day
-- **Authentication Failures**: Reduced from 12% to <0.1%
-- **Type Safety Violations**: Eliminated completely
-- **External API Failures**: Reduced from 15% to 2%
+### Test suite
 
-### Development Efficiency
-- **Debug Time**: Reduced by 60% due to improved logging
-- **Test Reliability**: Achieved consistent 100% pass rate
-- **Code Quality**: Enhanced type safety and error handling
+| State | Commit | Date | Result |
+| --- | --- | --- | --- |
+| Before the fixes | [`66d2ab56`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/66d2ab56) | 2 July 2025 | 117 of 177 passing (66.1%), 32 suites |
+| After the fixes | [`8360d8d6`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/8360d8d6) | 12 July 2025 | **303 of 303 passing (100%), 45 suites** |
+
+To reproduce either row:
+
+```bash
+git checkout 8360d8d6          # or 66d2ab56
+pnpm install && pnpm db:deploy && pnpm test --runInBand
+```
+
+Both rows have been re-run on Node 18 (the runtime of the period) and Node 22,
+with identical results.
+
+The coverage output from the original run is retained: `coverage/clover.xml`
+carries an internal generation timestamp of 12 July 2025 13:57:24 JST — six
+minutes after `8360d8d6`.
+
+### Runtime behaviour
+
+The application logs through Winston with `@google-cloud/logging-winston`, and
+Cloud Run records every inbound request with its status code. The queries below
+are the method; the figures are what they return over the 30 days ending
+10 September 2026.
+
+| Metric | Measured |
+| --- | ---: |
+| Database timeout entries | 0 over 30 days (0/day) |
+| Authentication failures | 223 of 312,397 requests (0.071%) |
+
+```sql
+-- Database timeout entries, daily
+SELECT DATE(timestamp) AS day, COUNT(*) AS db_timeouts
+FROM `co-creation-dao-prod.global._Default._AllLogs`
+WHERE timestamp >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 30 DAY)
+  AND resource.type = 'cloud_run_revision'
+  AND REGEXP_CONTAINS(
+        CONCAT(COALESCE(text_payload, ''),
+               COALESCE(TO_JSON_STRING(json_payload), '')),
+        r'P2024|ETIMEDOUT|Timed out fetching|connection pool')
+GROUP BY day ORDER BY day;
+
+-- Authentication failure rate, daily
+SELECT DATE(timestamp) AS day,
+       COUNTIF(http_request.status IN (401, 403))                                    AS auth_failures,
+       COUNT(*)                                                                      AS total_requests,
+       ROUND(SAFE_DIVIDE(COUNTIF(http_request.status IN (401, 403)), COUNT(*)) * 100, 3) AS auth_failure_pct
+FROM `co-creation-dao-prod.global._Default._AllLogs`
+WHERE timestamp >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 30 DAY)
+  AND resource.type = 'cloud_run_revision'
+  AND http_request.status IS NOT NULL
+GROUP BY day ORDER BY day;
+```
+
+Figures for 2025 are not available. The project's `_Default` log bucket has
+30-day retention with only the two built-in sinks and no export to BigQuery or
+Cloud Storage, so log data from that period has aged out, and the query results
+from the time were not retained.
+
+### What was removed and why
+
+An earlier version of this section carried five quantitative claims that were
+not derived from retained measurements. They have been removed:
+
+| Claim | Why it was removed |
+| --- | --- |
+| Test success 70% (210 of 300) before the fixes | Mis-stated. Re-running the suite at eight commits across the period, on Node 18 and Node 22, produces 117/177 through 303/303; no point yields 210 of 300. The corrected figures are in the table above. |
+| Database timeouts 25/day before the fixes | No retained measurement, and the 2025 log data has passed retention. |
+| Authentication failures 12% before the fixes | As above. |
+| External API failures 15% → 2% | No outbound-call status entries exist in the current logs to count, so the figure cannot be evidenced either way. |
+| Debugging time reduced by 60% | Not a quantity this system measures. No basis for the figure. |
+
+The fixes documented in this report are unaffected. Each carries its root
+cause, the change made, and the commit that made it; all 103 commit references
+in this report resolve in this repository.
 
 ---
 
