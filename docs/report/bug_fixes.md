@@ -752,6 +752,7 @@ are the method; the figures are what they return over the 30 days ending
 | Authentication failures | 223 of 312,397 requests (0.071%) |
 | Transactions over 3000 ms | 1 over 30 days (7,175 ms) |
 | DID/VC batch log entries | 0 over 30 days, across every resource type |
+| Request latency, this API | p50 1,148 ms, p90 1,878 ms over 136,005 requests |
 
 ```sql
 -- Database timeout entries, daily
@@ -795,7 +796,28 @@ WHERE timestamp >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 30 DAY)
                COALESCE(TO_JSON_STRING(json_payload), '')),
         r'DIDVCClient|VC requested|VC completed|DID completed|External API call failed')
 GROUP BY resource_type ORDER BY n DESC;
+
+-- Request latency. resource.type 'cloud_run_revision' spans three services in
+-- this project, so the figure is taken per service rather than across them.
+WITH r AS (
+  SELECT JSON_VALUE(resource.labels, '$.service_name') AS service,
+         http_request.latency.seconds * 1000
+       + http_request.latency.nanos / 1000000 AS ms
+  FROM `co-creation-dao-prod.global._Default._AllLogs`
+  WHERE timestamp >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 30 DAY)
+    AND resource.type = 'cloud_run_revision'
+    AND http_request.latency IS NOT NULL
+)
+SELECT service, COUNT(*) AS requests,
+       APPROX_QUANTILES(CAST(ms AS INT64), 100)[OFFSET(50)] AS p50_ms,
+       APPROX_QUANTILES(CAST(ms AS INT64), 100)[OFFSET(90)] AS p90_ms
+FROM r GROUP BY service ORDER BY requests DESC;
 ```
+
+Request latency is quoted as p50 and p90 rather than a mean. `http_request.latency`
+covers the whole request path, container start included, so a mean over a
+service that scales to zero is carried by the cold starts in its tail: for this
+API the same window gives a p90 of 1,878 ms against a p99 of 15,417 ms.
 
 Figures for 2025 are not available. The project's `_Default` log bucket has
 30-day retention with only the two built-in sinks and no export to BigQuery or
