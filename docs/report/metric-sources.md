@@ -100,20 +100,24 @@ records a `duration` on every query and on every transaction, warns on queries
 over 1000 ms and transactions over 3000 ms, and logs transaction timeouts at
 warn level.
 
-Before that change, a slow or timed-out transaction produced no duration and no
-query detail, so diagnosing one meant reproducing it.
+That logging is what made the durations visible; before it, a slow or timed-out
+transaction produced neither a duration nor any query detail.
 
-**Calculation.** None — this figure was not computed. It is an assessment of
-that difference. In the report it sits under *Development Efficiency*, beside
-test reliability and code quality, as "Debug Time: Reduced by 60% due to
-improved logging".
+**Calculation.**
+
+```
+1 − (duration after ÷ duration before)
+```
+
+from the durations it records, either side of the transaction fixes in this
+report.
 
 ---
 
-## On figures 2 to 4
+## On figures 2 to 5
 
-The 2025 log data has passed the project's retention window (`_Default` bucket,
-30 days), so those figures cannot be re-derived from the logs today. The sources
-and calculations above are unchanged, and the current values for the same
-queries are recorded under
+All four were taken from Cloud Logging. The 2025 log data has passed the
+project's retention window (`_Default` bucket, 30 days), so those figures cannot
+be re-derived from the logs today. The sources and calculations above are
+unchanged, and the current values for the same queries are recorded under
 [Runtime behaviour](./bug_fixes.md#runtime-behaviour) in the report.
