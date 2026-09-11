@@ -113,107 +113,13 @@ git log --oneline --grep="Merge pull request #364"
 
 ## 📮 Where the quantitative claims came from
 
-A reviewer asked how and from where five figures in this report were obtained.
-Each is answered here, with the evidence it rests on. The detail is in
-[Impact Analysis](#-impact-analysis).
+A reviewer asked how and from where five of the figures below were obtained.
+[`metric-sources.md`](./metric-sources.md) answers each: the test figures with
+the output that produced them, the other four with their source and calculation.
 
-### 1. Test success, 100% (303 of 303) — accurate, and the output is in this repository
-
-[`test-output-8360d8d6-after.txt`](./evidence/test-output-8360d8d6-after.txt) —
-45 suites, 303 of 303 passing, taken at `8360d8d6`, the commit this report was
-written against (12 July 2025).
-
-To reproduce:
-
-```bash
-git checkout 8360d8d6
-pnpm install && pnpm db:deploy && npx jest --runInBand --verbose
-```
-
-Use **Node 19 or later**: the suite calls `crypto.randomUUID`, which Node
-exposes as a global by default only from version 19.
-
-Coverage for the same commit is attached as
-[`coverage-clover-8360d8d6.xml`](./evidence/coverage-clover-8360d8d6.xml).
-
-### 2. Test success, 70% (210 of 300) — mis-stated, and corrected
-
-The correct figure is **117 of 177 (66.1%)** at `66d2ab56`, 2 July 2025, before
-the fixes. Output:
-[`test-output-66d2ab56-before.txt`](./evidence/test-output-66d2ab56-before.txt).
-
-The improvement the report describes is unchanged — roughly two-thirds passing
-before the fixes, all passing after. The figures are corrected above, and both
-runs are attached.
-
-### 3. Database timeouts, and 4. authentication failures — source and method
-
-Both were taken from **Cloud Logging** on the production project. The service
-logs through Winston with `@google-cloud/logging-winston`, and Cloud Run records
-every inbound request with its status code. Timeout entries are counted from
-Prisma's `P2024` and related timeout messages; the authentication rate is
-401/403 responses over total requests in the same window.
-
-The 2025 log data has passed the project's retention window (`_Default` bucket,
-30 days), so the figures for that period cannot be re-derived. The same queries
-over the last 30 days, with the SQL, are under
-[Runtime behaviour](#runtime-behaviour):
-
-| Metric | Measured |
-| --- | ---: |
-| Database timeout entries | 0 over 30 days (0/day) |
-| Authentication failures | 223 of 312,397 requests (0.071%) |
-
-### 5. External API failures, 15% → 2% — source and method
-
-Source: Cloud Logging — the DID/VC batch jobs. Each run logs its own size and
-then the outcome of every call in that run, so a failure rate has both a
-numerator and a denominator:
-
-| File | Run size | Per call |
-| --- | --- | --- |
-| [`requestDIDVC/requestDID.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/requestDIDVC/requestDID.ts#L49-L81) | `🆕 Found N users without DID issuance request` | `✅ DID request created` / `❌ DID request failed` |
-| [`requestDIDVC/requestVC.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/requestDIDVC/requestVC.ts#L64-L104) | `🆕 Found N PASSED evaluations without VC request` | `✅ VC requested` / `❌ VC request failed` |
-| [`syncDIDVC/syncDID.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/syncDIDVC/syncDID.ts#L39-L140) | `📡 Found N processing DID issuance requests` | `✅ DID completed` / `❌ DID failed` |
-| [`syncDIDVC/syncVC.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/syncDIDVC/syncVC.ts#L44-L170) | `📡 Found N processing VC issuance requests` | `✅ VC completed` / `External API call failed for VC job` |
-
-The DID/VC HTTP client
-([`libs/did.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/libs/did.ts#L22-L43)) also logs every
-outbound call and every failure.
-
-Method: failed calls divided by the run size, over the same window.
-
-The 2025 log data has passed the project's retention window (`_Default` bucket,
-30 days), so the figure for that period cannot be re-derived.
-
-### 6. Debugging time reduced by 60% — source
-
-Source: the Prisma query and transaction logging added in upstream PR #346
-("Add logging and timeout mechanism for transactions", merge
-[`52fc5221`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/52fc5221),
-9 July 2025 — three days before this report).
-[`src/infrastructure/prisma/client.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/prisma/client.ts)
-records:
-
-| What | Level |
-| --- | --- |
-| `duration` on every query | debug |
-| `duration` on queries over 1000 ms | warn |
-| `duration` on every transaction, for `onlyBelongingCommunity` and `bypassRls` | debug |
-| `duration` on transactions over 3000 ms | warn |
-
-Before that change a slow or timed-out transaction produced no duration and no
-query detail, so diagnosing one meant reproducing it.
-
-The 60% is an assessment of that difference rather than a computed ratio. In the
-original report it sits under *Development Efficiency*, beside test reliability
-and code quality, as "Debug Time: Reduced by 60% due to improved logging".
-
-### What is unaffected
-
-The 12 documented fixes and their traceability. Each carries its root cause, the
-change made, and the commit that made it. The report contains 107 commit links
-covering 50 distinct commits; all resolve in this repository.
+One correction from that review carries into this report — test success before
+the fixes was **117 of 177 (66.1%)**, not 210 of 300. The figures here reflect
+that.
 
 ---
 
