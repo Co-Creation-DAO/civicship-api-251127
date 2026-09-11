@@ -41,8 +41,11 @@ Coverage for `8360d8d6` is committed as
 **Source.** Cloud Logging on the production project. The service logs through
 Winston with `@google-cloud/logging-winston`.
 
-**Calculation.** Log entries per day whose message matches Prisma's `P2024` and
-the related connection-pool timeout errors.
+**Calculation.**
+
+```
+count(log entries matching P2024 or a connection-pool timeout) ÷ days in window
+```
 
 ---
 
@@ -51,8 +54,11 @@ the related connection-pool timeout errors.
 **Source.** The Cloud Run request logs for the service, which record every
 inbound request with its status code.
 
-**Calculation.** Responses with status 401 or 403, divided by total requests in
-the same window.
+**Calculation.**
+
+```
+count(responses with status 401 or 403) ÷ count(all requests in window)
+```
 
 ---
 
@@ -73,7 +79,13 @@ The DID/VC HTTP client
 ([`libs/did.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/libs/did.ts#L22-L43))
 also logs every outbound call and every failure.
 
-**Calculation.** Failed calls divided by the run size, over the same window.
+**Calculation.**
+
+```
+count(failed calls) ÷ sum(run size)
+```
+
+taken over the runs in the window.
 
 ---
 
@@ -91,8 +103,8 @@ warn level.
 Before that change, a slow or timed-out transaction produced no duration and no
 query detail, so diagnosing one meant reproducing it.
 
-**Calculation.** None. The 60% is an assessment of that difference, not a
-computed ratio. In the report it sits under *Development Efficiency*, beside
+**Calculation.** None — this figure was not computed. It is an assessment of
+that difference. In the report it sits under *Development Efficiency*, beside
 test reliability and code quality, as "Debug Time: Reduced by 60% due to
 improved logging".
 
