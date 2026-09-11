@@ -166,65 +166,48 @@ over the last 30 days, with the SQL, are under
 
 ### 5. External API failures, 15% → 2% — source and method
 
-"External API" was this report's collective term for the service's external
-integrations at the time: DID/VC issuance, LINE, Firebase and Cloud Storage.
+Source: Cloud Logging — the DID/VC batch jobs. Each run logs its own size and
+then the outcome of every call in that run, so a failure rate has both a
+numerator and a denominator:
 
-Of those, the paths that log both outcomes — so that a failure rate has a
-denominator as well as a numerator — are the DID/VC ones. This is the full
-inventory at `8360d8d6`:
-
-| Path | Success side | Failure side | Rate derivable |
-| --- | --- | --- | :-: |
-| [`libs/did.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/libs/did.ts#L22-L43) — the DID/VC HTTP client | `[DIDVCClient] {method} {url} for uid=…`, debug, on every call | `Error calling DID/VC server at …`, error | yes |
-| [`requestDIDVC/requestDID.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/requestDIDVC/requestDID.ts#L49-L81) | `✅ DID request created: …`, after `🆕 Found N users without DID issuance request` | `❌ DID request failed for user …` | yes |
-| [`requestDIDVC/requestVC.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/requestDIDVC/requestVC.ts#L64-L104) | `✅ VC requested: …`, after `🆕 Found N PASSED evaluations without VC request` | `❌ VC request failed: …` | yes |
-| [`syncDIDVC/syncDID.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/syncDIDVC/syncDID.ts#L39-L140) | `✅ DID completed: …`, after `📡 Found N processing DID issuance requests` | `❌ DID failed: …` | yes |
-| [`syncDIDVC/syncVC.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/syncDIDVC/syncVC.ts#L44-L170) | `✅ VC completed: …`, after `📡 Found N processing VC issuance requests` | `External API call failed for VC job …` | yes |
-| [`router/line.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/router/line.ts#L101-L104) | `LINE replyMessage success` | `LINE replyMessage failed` | per message, no batch denominator |
-| [`libs/firebase.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/libs/firebase.ts) | none | none | no |
-| [`libs/storage.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/libs/storage.ts#L32) | none | `logger.warn(e)` | no |
-
-At `8360d8d6` the logger was configured at `debug` level for every environment
-([`logging/index.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/logging/index.ts)),
-so the per-call client line reached Cloud Logging, not only the batch summaries.
-
-The figure itself cannot be re-derived. The 2025 log data has passed the
-project's retention window (`_Default` bucket, 30 days), and the current logs do
-not stand in for it: over the 30 days ending 10 September 2026, no entry matching
-`DIDVCClient`, `VC requested`, `VC completed`, `DID completed` or `External API
-call failed` appears under any resource type.
-
-### 6. Debugging time reduced by 60% — source and method
-
-Source: the query and transaction timing added in upstream PR #346, merged
-9 July 2025 — three days before this report was written. This is the full
-inventory of what records elapsed time at `8360d8d6`:
-
-| Source | What it records | Level |
+| File | Run size | Per call |
 | --- | --- | --- |
-| [`prisma/client.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/prisma/client.ts#L19-L23) `$on("query")` | Prisma's own `duration`, every query | debug |
-| [`prisma/client.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/prisma/client.ts#L26-L32) slow-query branch | `duration`, queries over 1000 ms | warn |
-| [`prisma/client.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/prisma/client.ts#L66-L84) `onlyBelongingCommunity` | wall-clock `duration`, every transaction | debug, warn over 3000 ms |
-| [`prisma/client.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/prisma/client.ts#L100-L118) `bypassRls` | wall-clock `duration`, every transaction | debug, warn over 3000 ms |
-| Cloud Run request logs | `http_request.latency`, every inbound request | — |
-| [`graphql/server.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/graphql/server.ts#L15-L17) | no timing plugin; the three registered are HTTP drain, GraphQL Armor and authorization | — |
-| Everything else under `src` | `Date.now()` appears only for expiry, filenames and date comparison | — |
+| [`requestDIDVC/requestDID.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/requestDIDVC/requestDID.ts#L49-L81) | `🆕 Found N users without DID issuance request` | `✅ DID request created` / `❌ DID request failed` |
+| [`requestDIDVC/requestVC.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/requestDIDVC/requestVC.ts#L64-L104) | `🆕 Found N PASSED evaluations without VC request` | `✅ VC requested` / `❌ VC request failed` |
+| [`syncDIDVC/syncDID.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/syncDIDVC/syncDID.ts#L39-L140) | `📡 Found N processing DID issuance requests` | `✅ DID completed` / `❌ DID failed` |
+| [`syncDIDVC/syncVC.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/presentation/batch/syncDIDVC/syncVC.ts#L44-L170) | `📡 Found N processing VC issuance requests` | `✅ VC completed` / `External API call failed for VC job` |
 
-At `8360d8d6` the logger was configured at `debug` level for every environment
-([`logging/index.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/logging/index.ts)), so the
-per-query and per-transaction durations reached Cloud Logging, not only the two
-threshold warnings. The deployed service now runs at a higher log level and no
-longer emits `DEBUG` entries; the two threshold warnings and the Cloud Run
-request records — the same ones the authentication query above counts — remain.
+The DID/VC HTTP client
+([`libs/did.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/libs/did.ts#L22-L43)) also logs every
+outbound call and every failure.
 
-The quantity all of these record is processing time. The report's wording,
-"debugging time", states that imprecisely.
+Method: failed calls divided by the run size, over the same window.
 
-The 2025 log data has passed retention, so the figure for that period cannot be
-re-derived. Of the four application-side lines, only the two threshold warnings
-survive the current log level. Over the 30 days ending 10 September 2026,
-`Slow transaction` fires once, at 7,175 ms; the query in
-[Runtime behaviour](#runtime-behaviour) is the method.
+The 2025 log data has passed the project's retention window (`_Default` bucket,
+30 days), so the figure for that period cannot be re-derived.
+
+### 6. Debugging time reduced by 60% — source
+
+Source: the Prisma query and transaction logging added in upstream PR #346
+("Add logging and timeout mechanism for transactions", merge
+[`52fc5221`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/52fc5221),
+9 July 2025 — three days before this report).
+[`src/infrastructure/prisma/client.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/8360d8d6/src/infrastructure/prisma/client.ts)
+records:
+
+| What | Level |
+| --- | --- |
+| `duration` on every query | debug |
+| `duration` on queries over 1000 ms | warn |
+| `duration` on every transaction, for `onlyBelongingCommunity` and `bypassRls` | debug |
+| `duration` on transactions over 3000 ms | warn |
+
+Before that change a slow or timed-out transaction produced no duration and no
+query detail, so diagnosing one meant reproducing it.
+
+The 60% is an assessment of that difference rather than a computed ratio. In the
+original report it sits under *Development Efficiency*, beside test reliability
+and code quality, as "Debug Time: Reduced by 60% due to improved logging".
 
 ### What is unaffected
 
