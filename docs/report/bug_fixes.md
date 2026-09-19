@@ -35,7 +35,7 @@ All twelve merge commits below were verified to be ancestors of `master` in this
 | Upstream PR | Fix (section in this report) | Merge commit in this repository | Merged | Commits contained in that merge |
 | --- | --- | --- | --- | --- |
 | #360 | Prisma Expired Transaction Error Resolution | [`2e6cda92`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/2e6cda922a93c8db8484dfb0423969b8438a8db4) | 2025-07-10 | [`6fe81f23`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/6fe81f238b138cc2f7fd9c258b4c2c0a792ac636), [`a0e0673e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/a0e0673eb7c72c020feec9103a00aa48030e2f50) |
-| #339 | BigInt GraphQL Processing Fix | [`eccc464a`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/eccc464a908f920bddd1779d2aa002688f9d2a6c) | 2025-07-08 | [`1ec42f5e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/1ec42f5e1adfd3175d69a70d135cc4cf16a0f968) |
+| #339 | BigInt fix carried to the release line (upstream PR #335) | [`eccc464a`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/eccc464a908f920bddd1779d2aa002688f9d2a6c) | 2025-07-08 | [`1ec42f5e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/1ec42f5e1adfd3175d69a70d135cc4cf16a0f968), [`31d7837d`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/31d7837d4f72893b638ecf085b83cb7659f3fdc2), [`797f622c`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/797f622c36f87feb2a46325334b0914305e90f68) |
 | #331 | VC Issuance DID Dependency Fix | [`3c03de0d`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/3c03de0d13982fbc55798193d5a13dc63ffe0b90) | 2025-07-08 | [`d3fdb091`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/d3fdb09110d97d8547c6ee27cdbb99794f7661ab), [`5514d9a9`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/5514d9a9ab467abc016761e7b7d1969da42d8047), [`c7f6bed3`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/c7f6bed3cdefd861e72464240f80bfc4f4dfecad), [`fca0f38a`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/fca0f38a399a935e4fb73b8028bba31e475f50be) |
 | #364 | Async Promise Handling Fix | [`d6661781`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/d6661781f2beb547571cac54fefa1e1897cf4151) | 2025-07-10 | [`7d72d41a`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/7d72d41a915a703599bfe3a898a88683cf867757) |
 | #362 | VC/DID Issuance Workflow Refactor | [`56d3c966`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/56d3c966256c411a16340c5ad99854305a1781d8) | 2025-07-10 | [`312b0682`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/312b06826211638d1c452a91dfa1917832add8f9), [`2699ef0f`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/2699ef0fcb3b9f7792f9f0cbf1310c483e3b538e), [`a221a71f`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/a221a71f4876343a33ddc6e9234d8ad444417a93) |
@@ -168,42 +168,20 @@ git show cef3275 src/application/domain/account/wallet/service.ts
   - `grantCommunityPoint.test.ts`
   - `donateSelfPoint.test.ts`
 
-### Upstream PR #339: BigInt GraphQL Processing Fix
+### Upstream PR #339: BigInt fix carried to the release line
 
 **Links** — every reference below resolves in `Co-Creation-DAO/civicship-api-251127`:
 
 - Integration commit of upstream PR #339 (merged 2025-07-08): [`eccc464a`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/eccc464a908f920bddd1779d2aa002688f9d2a6c)
 - Commits contained in that merge:
   - [`1ec42f5e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/1ec42f5e1adfd3175d69a70d135cc4cf16a0f968) — "feat: add `createdByUser` field to `GqlTransaction` type"
-- Implementation: GraphQL `BigInt` scalar configuration (see *Solution* below)
+  - [`31d7837d`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/31d7837d4f72893b638ecf085b83cb7659f3fdc2) — merge of upstream PR #336, a re-merge of the same branch as #335 carrying no further commits
+  - [`797f622c`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/797f622c36f87feb2a46325334b0914305e90f68) — merge of upstream PR #335
 
-**Issue:** GraphQL serialization failures with large numeric values
-
-**Root Cause:** Improper BigInt handling in GraphQL scalar types causing overflow and precision loss
-
-**Solution:** Enhanced BigInt typing and serialization logic
-- GraphQL schema: [`src/presentation/graphql/schema/utils.graphql`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/presentation/graphql/schema/utils.graphql) - BigInt scalar definition
-- Type generation: Auto-generated types in `src/types/graphql.ts`
-- Database layer: Prisma handles BigInt natively for PostgreSQL numeric types
-- Point calculation: [`src/application/domain/transaction/service.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/application/domain/transaction/service.ts) - Uses Int type with proper bounds checking
-
-**Impact:** The BigInt scalar serializes large point values through GraphQL without overflow or precision loss.
-
-**Verification:**
-```bash
-# Check GraphQL scalar types
-cat src/presentation/graphql/schema/utils.graphql | grep "scalar"
-
-# View point transaction handling
-cat src/application/domain/transaction/service.ts | grep -A5 "transferPoints"
-
-# Check database schema for numeric types
-grep -A3 "current_point\|accumulated_point" src/infrastructure/prisma/schema.prisma
-```
-
-**Related Tests:**
-- Boundary value tests: [`src/__tests__/integration/pointTransfer/boundaryValues.test.ts`](https://github.com/Co-Creation-DAO/civicship-api-251127/blob/677f46e9/src/__tests__/integration/pointTransfer/boundaryValues.test.ts)
-- Large amount transaction tests
+Upstream PR #339 is the hotfix branch `hotfix/current-point-bigint`. It carried upstream
+PR #335 onto the release line; the BigInt change itself is PR #335, described under
+*Upstream PR #335: BigInt Type System Enhancement* below. The only commit of PR #339's own,
+`1ec42f5e`, adds a `createdByUser` field and is unrelated to BigInt.
 
 ### Upstream PR #331: VC Issuance DID Dependency Fix
 
