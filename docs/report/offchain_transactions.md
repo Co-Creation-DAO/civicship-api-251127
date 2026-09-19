@@ -923,9 +923,10 @@ mapping and verification steps.
    - Impact: transaction scope is bounded per operation, so a single long block
      no longer holds connections from the pool for the duration of the request
 
-2. **Upstream PR #339** — BigInt GraphQL processing fix
-   - Merge commit: [`eccc464a`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/eccc464a908f920bddd1779d2aa002688f9d2a6c) (merged 2025-07-08)
-   - Commit in that merge: [`1ec42f5e`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/1ec42f5e1adfd3175d69a70d135cc4cf16a0f968)
+2. **Upstream PR #335** — BigInt GraphQL processing fix
+   - Merge commit: [`1eb2e76f`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/1eb2e76f970f72c09856efdcb15e43e4230e76cf) (merged 2025-07-08)
+   - Commits in that merge: [`77ffded7`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/77ffded77f63f0525dd65c1417f3496de1251acd), [`beec4199`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/beec41993eb8f374eb4e46a69af07b3c4eb1565c), [`2ce78add`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/2ce78add360f200354d423d74394349c25706b87)
+   - Carried to the release line by upstream PR #339, merge commit [`eccc464a`](https://github.com/Co-Creation-DAO/civicship-api-251127/commit/eccc464a908f920bddd1779d2aa002688f9d2a6c)
    - Fixed: Large number handling in GraphQL scalars
    - Impact: the BigInt scalar serializes large point values through GraphQL
      without overflow or precision loss
