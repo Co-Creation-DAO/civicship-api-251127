@@ -31,7 +31,7 @@ The off-chain point transaction system provides a PostgreSQL-based implementatio
 ### Design Principles
 
 1. **Off-Chain First**: All point transactions occur in PostgreSQL, with potential future blockchain sync
-2. **Eventual Consistency**: Balance views update asynchronously after transactions
+2. **Read-After-Write Balances**: After a transaction commits, the balance view is refreshed in a separate database transaction, and the mutation returns only after that refresh completes
 3. **Audit Trail**: Every point movement is recorded in `t_transactions` table
 4. **Scalability**: Materialized views enable O(1) balance lookups even with millions of transactions
 
@@ -130,7 +130,8 @@ sequenceDiagram
    └─> src/application/domain/transaction/data/repository.ts
    └─> Executes: INSERT INTO t_transactions (...)
 
-5. Balance Update (Asynchronous)
+5. Balance Update (after commit, before the response is returned)
+   └─> src/application/domain/transaction/usecase.ts:84-86 (awaited)
    └─> src/application/domain/transaction/service.ts:137-139
    └─> Triggers: REFRESH MATERIALIZED VIEW CONCURRENTLY mv_current_points
 ```
@@ -526,7 +527,9 @@ REFRESH MATERIALIZED VIEW CONCURRENTLY "mv_current_points";
 - **1M transactions**: ~10-30 seconds
 - **Query time**: O(1) - Direct index lookup
 
-### Eventual Consistency Model
+### Balance Refresh Timing
+
+The balance view is refreshed in its own database transaction, separate from the transaction that inserts the point movement. The mutation does not return until that refresh has finished: issuing (`usecase.ts:84-86`), granting (`usecase.ts:137-139`) and transferring (`usecase.ts:196-198`) all `await` the refresh before building the response.
 
 **Timeline of a Transaction:**
 
@@ -539,17 +542,20 @@ Time: 50ms
 └─> Transaction COMMITTED
 
 Time: 100ms
-└─> REFRESH MATERIALIZED VIEW started (separate transaction)
+└─> REFRESH MATERIALIZED VIEW started (separate transaction, awaited)
 
 Time: 1500ms
 └─> Materialized view refresh COMPLETED
 └─> Balance now reflects new transaction
+
+Time: 1500ms+
+└─> Mutation response returned to the client
 ```
 
 **Implications:**
-- Balance queries immediately after transaction may show **old balance** (1-2 seconds delay)
-- System provides **eventual consistency** (not strict real-time)
-- Client UIs should show optimistic updates or loading states
+- When the client receives the success response, both the sender's and the recipient's balances already reflect the transaction. If A holds 100 pt and sends 10 pt to B, A's balance reads 90 and B's balance is 10 higher as soon as the response arrives.
+- The refresh time is part of the mutation's response time (about 1–3 seconds at 100K transactions, see above).
+- Another session that reads a balance in the window between the commit and the end of the refresh can still see the previous value. The session that made the transaction does not, because its response arrives after the refresh.
 
 **Handling Race Conditions:**
 
